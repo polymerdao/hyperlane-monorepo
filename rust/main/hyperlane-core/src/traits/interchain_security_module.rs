@@ -41,6 +41,18 @@ pub enum ModuleType {
     Null,
     /// Ccip Read ISM (accepts offchain signature information)
     CcipRead,
+    /// Arbitrum L2 to L1 ISM
+    ArbL2ToL1,
+    /// Weighted Merkle Root Multisig ISM
+    WeightedMerkleRootMultisig,
+    /// Weighted Message ID Multisig ISM
+    WeightedMessageIdMultisig,
+    /// Optimism L2 to L1 ISM
+    OpL2ToL1,
+    /// Polymer ISM
+    Polymer,
+    /// Hashi ISM
+    Hashi,
 }
 
 /// Interface for the InterchainSecurityModule chain contract. Allows abstraction over

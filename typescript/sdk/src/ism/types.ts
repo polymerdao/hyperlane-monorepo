@@ -42,6 +42,9 @@ export enum ModuleType {
   ARB_L2_TO_L1,
   WEIGHTED_MERKLE_ROOT_MULTISIG,
   WEIGHTED_MESSAGE_ID_MULTISIG,
+  OP_L2_TO_L1,
+  POLYMER,
+  HASHI,
 }
 
 // this enum can be adjusted as per deployments necessary
@@ -66,6 +69,9 @@ export enum IsmType {
   WEIGHTED_MERKLE_ROOT_MULTISIG = 'weightedMerkleRootMultisigIsm',
   WEIGHTED_MESSAGE_ID_MULTISIG = 'weightedMessageIdMultisigIsm',
   CCIP = 'ccipIsm',
+  OP_L2_TO_L1 = 'opL2ToL1Ism',
+  POLYMER = 'polymerIsm',
+  HASHI = 'hashiIsm',
 }
 
 // ISM types that can be updated in-place
@@ -105,6 +111,12 @@ export function ismTypeToModuleType(ismType: IsmType): ModuleType {
       return ModuleType.WEIGHTED_MERKLE_ROOT_MULTISIG;
     case IsmType.WEIGHTED_MESSAGE_ID_MULTISIG:
       return ModuleType.WEIGHTED_MESSAGE_ID_MULTISIG;
+    case IsmType.OP_L2_TO_L1:
+      return ModuleType.OP_L2_TO_L1;
+    case IsmType.POLYMER:
+      return ModuleType.POLYMER;
+    case IsmType.HASHI:
+      return ModuleType.HASHI;
   }
 }
 
