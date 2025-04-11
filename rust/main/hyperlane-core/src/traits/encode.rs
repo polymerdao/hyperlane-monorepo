@@ -303,6 +303,28 @@ impl<T: Decode> Decode for Indexed<T> {
     }
 }
 
+impl Encode for Vec<u8> {
+    fn write_to<W>(&self, writer: &mut W) -> std::io::Result<usize>
+    where
+        W: std::io::Write,
+    {
+        writer.write_all(self)?;
+        Ok(self.len())
+    }
+}
+
+impl Decode for Vec<u8> {
+    fn read_from<R>(reader: &mut R) -> Result<Self, HyperlaneProtocolError>
+    where
+        R: std::io::Read,
+        Self: Sized,
+    {
+        let mut buf = Vec::new();
+        reader.read_to_end(&mut buf)?;
+        Ok(buf)
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::{Decode, Encode, Indexed, H256};

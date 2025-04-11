@@ -32,6 +32,8 @@ const GAS_EXPENDITURE_FOR_MESSAGE_ID: &str = "gas_expenditure_for_message_id_v2_
 const STATUS_BY_MESSAGE_ID: &str = "status_by_message_id_";
 const PENDING_MESSAGE_RETRY_COUNT_FOR_MESSAGE_ID: &str =
     "pending_message_retry_count_for_message_id_";
+const FSR_PROOF_BY_MESSAGE_ID: &str = "fsr_proof_by_message_id_";
+const FSR_RESPONSE_BY_MESSAGE_ID: &str = "fsr_response_by_message_id_";
 const MERKLE_TREE_INSERTION: &str = "merkle_tree_insertion_";
 const MERKLE_LEAF_INDEX_BY_MESSAGE_ID: &str = "merkle_leaf_index_by_message_id_";
 const MERKLE_TREE_INSERTION_BLOCK_NUMBER_BY_LEAF_INDEX: &str =
@@ -529,12 +531,43 @@ impl HyperlaneDb for HyperlaneRocksDB {
         self.store_value_by_key(STATUS_BY_MESSAGE_ID, message_id, status)
     }
 
-    /// Retrieve the status of an operation by its message id
     fn retrieve_status_by_message_id(
         &self,
         message_id: &H256,
     ) -> DbResult<Option<PendingOperationStatus>> {
         self.retrieve_value_by_key(STATUS_BY_MESSAGE_ID, message_id)
+    }
+
+    fn store_fsr_proof_by_message_id(
+        &self,
+        message_id: &H256,
+        proof: &[u8],
+    ) -> DbResult<()> {
+        let proof_vec = proof.to_vec();
+        self.store_value_by_key(FSR_PROOF_BY_MESSAGE_ID, message_id, &proof_vec)
+    }
+
+    fn retrieve_fsr_proof_by_message_id(
+        &self,
+        message_id: &H256,
+    ) -> DbResult<Option<Vec<u8>>> {
+        self.retrieve_value_by_key(FSR_PROOF_BY_MESSAGE_ID, message_id)
+    }
+
+    fn store_fsr_response_by_message_id(
+        &self,
+        message_id: &H256,
+        response: &[u8],
+    ) -> DbResult<()> {
+        let response_vec = response.to_vec();
+        self.store_value_by_key(FSR_RESPONSE_BY_MESSAGE_ID, message_id, &response_vec)
+    }
+
+    fn retrieve_fsr_response_by_message_id(
+        &self,
+        message_id: &H256,
+    ) -> DbResult<Option<Vec<u8>>> {
+        self.retrieve_value_by_key(FSR_RESPONSE_BY_MESSAGE_ID, message_id)
     }
 
     fn store_interchain_gas_payment_data_by_gas_payment_key(

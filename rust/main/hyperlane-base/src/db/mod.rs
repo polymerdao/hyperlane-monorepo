@@ -35,6 +35,14 @@ pub trait HyperlaneDb: Send + Sync {
 
     fn retrieve_message_by_id(&self, id: &H256) -> DbResult<Option<HyperlaneMessage>>;
 
+    fn store_fsr_proof_by_message_id(&self, message_id: &H256, proof: &[u8]) -> DbResult<()>;
+
+    fn retrieve_fsr_proof_by_message_id(&self, message_id: &H256) -> DbResult<Option<Vec<u8>>>;
+
+    fn store_fsr_response_by_message_id(&self, message_id: &H256, response: &[u8]) -> DbResult<()>;
+
+    fn retrieve_fsr_response_by_message_id(&self, message_id: &H256) -> DbResult<Option<Vec<u8>>>;
+
     fn store_dispatched_block_number_by_nonce(
         &self,
         nonce: &u32,
