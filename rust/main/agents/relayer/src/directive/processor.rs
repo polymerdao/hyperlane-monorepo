@@ -12,12 +12,13 @@ use hyperlane_base::{
     db::{HyperlaneDb, HyperlaneRocksDB},
     CoreMetrics,
 };
-use hyperlane_core::{HyperlaneDomain, HyperlaneMessage, QueueOperation};
+use hyperlane_core::{HyperlaneDomain, HyperlaneMessage, QueueOperation, InterchainSecurityModule, ModuleType};
 use prometheus::IntGauge;
-use tokio::sync::mpsc::UnboundedSender;
+use tokio::sync::mpsc::{UnboundedSender, UnboundedReceiver};
 use tracing::{debug, instrument, trace};
 
 use crate::processor::ProcessorExt;
+use crate::directive::fsr_providers::polymer::{PolymerFSRProvider, FSRRequest, FSRResponse};
 
 /// Finds unprocessed messages from an origin and submits them through a channel
 /// for processing.
@@ -28,6 +29,50 @@ pub struct DirectiveProcessor {
     nonce_iterator: ForwardBackwardIterator,
     #[new(default)]
     max_retries: u32,
+    /// Map of ISM module types to their corresponding FSR providers
+    fsr_providers: HashMap<ModuleType, (UnboundedSender<FSRRequest>, UnboundedReceiver<FSRResponse>)>,
+}
+
+impl DirectiveProcessor {
+    pub fn new(
+        db: HyperlaneRocksDB,
+        metrics: DirectiveProcessorMetrics,
+        nonce_iterator: ForwardBackwardIterator,
+        max_retries: u32,
+        polymer_api_token: String,
+        polymer_api_endpoint: String,
+    ) -> Self {
+        let (polymer_request_tx, polymer_request_rx) = tokio::sync::mpsc::unbounded_channel();
+        let (polymer_response_tx, polymer_response_rx) = tokio::sync::mpsc::unbounded_channel();
+
+        let polymer_provider = PolymerFSRProvider::new(
+            polymer_request_rx,
+            polymer_response_tx,
+            polymer_api_token,
+            polymer_api_endpoint,
+        );
+
+        // Start the Polymer FSR provider
+        tokio::spawn(async move {
+            if let Err(e) = polymer_provider.start().await {
+                tracing::error!(error = ?e, "Polymer FSR provider failed");
+            }
+        });
+
+        let mut fsr_providers = HashMap::new();
+        fsr_providers.insert(
+            ModuleType::Polymer,
+            (polymer_request_tx, polymer_response_rx),
+        );
+
+        Self {
+            db,
+            metrics,
+            nonce_iterator,
+            max_retries,
+            fsr_providers,
+        }
+    }
 }
 
 impl Debug for DirectiveProcessor {

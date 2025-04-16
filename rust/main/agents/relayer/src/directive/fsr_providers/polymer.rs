@@ -29,8 +29,6 @@ pub struct FSRResponse {
 /// Fetches proofs for messages using Polymer's FSR
 #[derive(Debug, new)]
 pub struct PolymerFSRProvider {
-    /// The metrics to use for tracking proof fetching
-    metrics: CoreMetrics,
     /// The channel to receive FSR requests on
     fsr_request_rx: UnboundedReceiver<FSRRequest>,
     /// The channel to send FSR responses on
