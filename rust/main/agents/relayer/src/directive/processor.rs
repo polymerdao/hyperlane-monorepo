@@ -12,7 +12,7 @@ use hyperlane_base::{
     db::{HyperlaneDb, HyperlaneRocksDB},
     CoreMetrics,
 };
-use hyperlane_core::{HyperlaneDomain, HyperlaneMessage, QueueOperation, InterchainSecurityModule, ModuleType};
+use hyperlane_core::{HyperlaneDomain, HyperlaneMessage, ModuleType};
 use prometheus::IntGauge;
 use tokio::sync::mpsc::{UnboundedSender, UnboundedReceiver};
 use tracing::{debug, instrument, trace};

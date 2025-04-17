@@ -1,4 +1,5 @@
 use std::fmt::Debug;
+use std::hash::{Hash, Hasher};
 
 use async_trait::async_trait;
 use auto_impl::auto_impl;
@@ -53,6 +54,13 @@ pub enum ModuleType {
     Polymer,
     /// Hashi ISM
     Hashi,
+}
+
+impl Hash for ModuleType {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        // Use the discriminant (enum variant index) for hashing
+        std::mem::discriminant(self).hash(state);
+    }
 }
 
 /// Interface for the InterchainSecurityModule chain contract. Allows abstraction over
