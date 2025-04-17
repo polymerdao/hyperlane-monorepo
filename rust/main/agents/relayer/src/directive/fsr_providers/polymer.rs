@@ -3,7 +3,6 @@ use derive_new::new;
 use eyre::Result;
 use ethers::types::Bytes;
 use hyperlane_base::CoreMetrics;
-use tokio::sync::mpsc::{UnboundedReceiver, UnboundedSender};
 use tracing::{debug, error, info};
 
 /// Message sent to the FSR provider
@@ -29,10 +28,6 @@ pub struct FSRResponse {
 /// Fetches proofs for messages using Polymer's FSR
 #[derive(Debug, new)]
 pub struct PolymerFSRProvider {
-    /// The channel to receive FSR requests on
-    fsr_request_rx: UnboundedReceiver<FSRRequest>,
-    /// The channel to send FSR responses on
-    fsr_response_tx: UnboundedSender<FSRResponse>,
     /// The API token for Polymer
     api_token: String,
     /// The API endpoint for Polymer
@@ -40,27 +35,8 @@ pub struct PolymerFSRProvider {
 }
 
 impl PolymerFSRProvider {
-    /// Start the FSR provider
-    pub async fn start(mut self) -> Result<()> {
-        info!("Starting Polymer FSR provider");
-        while let Some(request) = self.fsr_request_rx.recv().await {
-            match self.fetch_proof(&request).await {
-                Ok(proof) => {
-                    let response = FSRResponse { proof };
-                    if let Err(e) = self.fsr_response_tx.send(response) {
-                        error!(error = ?e, "Failed to send FSR response");
-                    }
-                }
-                Err(e) => {
-                    error!(error = ?e, "Failed to fetch proof");
-                }
-            }
-        }
-        Ok(())
-    }
-
     /// Fetch a proof for a message
-    async fn fetch_proof(&self, request: &FSRRequest) -> Result<Bytes> {
+    pub async fn fetch_proof(&self, request: &FSRRequest) -> Result<Bytes> {
         debug!(
             chain_id = request.chain_id,
             block_number = request.block_number,

@@ -12,13 +12,12 @@ use hyperlane_base::{
     db::{HyperlaneDb, HyperlaneRocksDB},
     CoreMetrics,
 };
-use hyperlane_core::{HyperlaneDomain, HyperlaneMessage, ModuleType};
+use hyperlane_core::{HyperlaneDomain, HyperlaneMessage, ModuleType, Mailbox};
 use prometheus::IntGauge;
-use tokio::sync::mpsc::{UnboundedSender, UnboundedReceiver};
 use tracing::{debug, instrument, trace};
 
 use crate::processor::ProcessorExt;
-use crate::directive::fsr_providers::polymer::{PolymerFSRProvider, FSRRequest, FSRResponse};
+use crate::directive::fsr_providers::polymer::PolymerFSRProvider;
 
 /// Finds unprocessed messages from an origin and submits them through a channel
 /// for processing.
@@ -28,7 +27,9 @@ pub struct DirectiveProcessor {
     nonce_iterator: ForwardBackwardIterator,
     max_retries: u32,
     /// Map of ISM module types to their corresponding FSR providers
-    fsr_providers: HashMap<ModuleType, (UnboundedSender<FSRRequest>, UnboundedReceiver<FSRResponse>)>,
+    fsr_providers: HashMap<ModuleType, PolymerFSRProvider>,
+    /// Mailbox on the destination chain
+    destination_mailbox: Arc<dyn Mailbox>,
 }
 
 impl DirectiveProcessor {
@@ -38,30 +39,19 @@ impl DirectiveProcessor {
         max_retries: u32,
         polymer_api_token: String,
         polymer_api_endpoint: String,
+        destination_mailbox: Arc<dyn Mailbox>,
     ) -> Self {
         let nonce_iterator = ForwardBackwardIterator::new(Arc::new(db.clone()));
         
-        let (polymer_request_tx, polymer_request_rx) = tokio::sync::mpsc::unbounded_channel();
-        let (polymer_response_tx, polymer_response_rx) = tokio::sync::mpsc::unbounded_channel();
-
         let polymer_provider = PolymerFSRProvider::new(
-            polymer_request_rx,
-            polymer_response_tx,
             polymer_api_token,
             polymer_api_endpoint,
         );
 
-        // Start the Polymer FSR provider
-        tokio::spawn(async move {
-            if let Err(e) = polymer_provider.start().await {
-                tracing::error!(error = ?e, "Polymer FSR provider failed");
-            }
-        });
-
         let mut fsr_providers = HashMap::new();
         fsr_providers.insert(
             ModuleType::Polymer,
-            (polymer_request_tx, polymer_response_rx),
+            polymer_provider,
         );
 
         Self {
@@ -70,6 +60,7 @@ impl DirectiveProcessor {
             nonce_iterator,
             max_retries,
             fsr_providers,
+            destination_mailbox,
         }
     }
 }
@@ -98,7 +89,21 @@ impl ProcessorExt for DirectiveProcessor {
         if let Some(msg) = self.try_get_unprocessed_message().await? {
             // Process the message
             debug!(hyp_message=?msg, "Found processable message");
-            // TODO: Add message processing logic here
+            
+            // Check if it's a directive
+            if crate::directive::utils::is_directive(&msg) {
+                // Get the ISM from the mailbox
+                // TODO: Actually check the module type of the recipient ISM to determine the FSR provider.
+                // let ism_address = self.destination_mailbox.recipient_ism(msg.recipient).await?;
+                
+                // If it's a Polymer ISM, parse and send to Polymer FSR provider
+                if let Some(provider) = self.fsr_providers.get_mut(&ModuleType::Polymer) {
+                    let fsr_request = crate::directive::utils::parse_directive_to_fsr_request(&msg)?;
+                    if let Err(e) = provider.fetch_proof(&fsr_request).await {
+                        tracing::error!(error = ?e, "Failed to fetch proof from Polymer provider");
+                    }
+                }
+            }
         } else {
             tokio::time::sleep(Duration::from_secs(1)).await;
         }
