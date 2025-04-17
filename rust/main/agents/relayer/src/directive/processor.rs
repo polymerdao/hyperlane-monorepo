@@ -22,12 +22,10 @@ use crate::directive::fsr_providers::polymer::{PolymerFSRProvider, FSRRequest, F
 
 /// Finds unprocessed messages from an origin and submits them through a channel
 /// for processing.
-#[derive(new)]
 pub struct DirectiveProcessor {
     db: HyperlaneRocksDB,
     metrics: DirectiveProcessorMetrics,
     nonce_iterator: ForwardBackwardIterator,
-    #[new(default)]
     max_retries: u32,
     /// Map of ISM module types to their corresponding FSR providers
     fsr_providers: HashMap<ModuleType, (UnboundedSender<FSRRequest>, UnboundedReceiver<FSRResponse>)>,
@@ -37,11 +35,12 @@ impl DirectiveProcessor {
     pub fn new(
         db: HyperlaneRocksDB,
         metrics: DirectiveProcessorMetrics,
-        nonce_iterator: ForwardBackwardIterator,
         max_retries: u32,
         polymer_api_token: String,
         polymer_api_endpoint: String,
     ) -> Self {
+        let nonce_iterator = ForwardBackwardIterator::new(Arc::new(db.clone()));
+        
         let (polymer_request_tx, polymer_request_rx) = tokio::sync::mpsc::unbounded_channel();
         let (polymer_response_tx, polymer_response_rx) = tokio::sync::mpsc::unbounded_channel();
 
