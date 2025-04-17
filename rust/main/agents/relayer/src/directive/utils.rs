@@ -1,4 +1,6 @@
+use eyre::Result;
 use hyperlane_core::HyperlaneMessage;
+use crate::directive::fsr_providers::polymer::FSRRequest;
 
 /// Magic number prefix for directive messages
 /// MAGIC_NUMBER = 0xFAF09B8DEEC3D47AB5A2F9007ED1C8AD83E602B7FDAA1C47589F370CDA6BF2E1
@@ -7,8 +9,15 @@ pub const MAGIC_NUMBER: [u8; 32] = [
     0x83, 0xE6, 0x02, 0xB7, 0xFD, 0xAA, 0x1C, 0x47, 0x58, 0x9F, 0x37, 0x0C, 0xDA, 0x6B, 0xF2, 0xE1,
 ];
 
+/// Directive types
+#[derive(Debug, Clone, Copy)]
+pub enum DirectiveType {
+    /// EVM log directive type
+    EVMLog = 0x01,
+}
+
 /// Checks if a message is a directive by matching the magic number prefix
-/// The format of directive messages is [MAGIC_NUMBER, []Directive]
+/// The format of directive messages is [MAGIC_NUMBER, DIRECTIVE]
 /// A magic number prefix followed by a list of directives.
 pub fn is_directive(message: &HyperlaneMessage) -> bool {
     // Check if the body starts with '['
@@ -23,6 +32,52 @@ pub fn is_directive(message: &HyperlaneMessage) -> bool {
 
     // Compare the magic number bytes
     message.body[1..=MAGIC_NUMBER.len()] == MAGIC_NUMBER
+}
+
+/// Parse a HyperlaneMessage body into an FSRRequest
+/// [MAGIC_NUMBER,[DIRECTIVE_TYPE,[CHAIN_ID,BLOCK_NUMBER,TX_INDEX,LOG_INDEX]]
+/// TODO: Make a flexible parser for different directive types and providers.
+pub fn parse_directive_to_fsr_request(message: &HyperlaneMessage) -> Result<FSRRequest> {
+    let body = &message.body;
+    
+    // Check magic number
+    if body[0] != b'[' || body[1..=MAGIC_NUMBER.len()] != MAGIC_NUMBER {
+        return Err(eyre::eyre!("Invalid magic number"));
+    }
+
+    // Parse directive
+    let directive = &body[MAGIC_NUMBER.len() + 2..]; // Skip '[', MAGIC_NUMBER, and ','
+    let directive_type = directive[0];
+    
+    if directive_type != DirectiveType::EVMLog as u8 {
+        return Err(eyre::eyre!("Unsupported directive type"));
+    }
+
+    // Parse args (chain_id, block_number, tx_index, log_index)
+    let args_start = 2; // Skip directive type and comma
+    let args = &directive[args_start..];
+    
+    // Check for opening bracket of args
+    if args[0] != b'[' {
+        return Err(eyre::eyre!("Invalid args format"));
+    }
+
+    // Parse each arg, skipping commas
+    let mut offset = 1; // Skip opening bracket
+    let chain_id = u64::from_be_bytes(args[offset..offset+8].try_into()?);
+    offset += 9; // Skip value and comma
+    let block_number = u64::from_be_bytes(args[offset..offset+8].try_into()?);
+    offset += 9; // Skip value and comma
+    let tx_index = u32::from_be_bytes(args[offset..offset+4].try_into()?);
+    offset += 5; // Skip value and comma
+    let log_index = u32::from_be_bytes(args[offset..offset+4].try_into()?);
+
+    Ok(FSRRequest {
+        chain_id,
+        block_number,
+        tx_index,
+        log_index,
+    })
 }
 
 #[cfg(test)]
