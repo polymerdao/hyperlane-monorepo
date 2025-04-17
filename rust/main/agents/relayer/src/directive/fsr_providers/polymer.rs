@@ -2,8 +2,7 @@ use base64::{engine::general_purpose, Engine};
 use derive_new::new;
 use eyre::Result;
 use ethers::types::Bytes;
-use hyperlane_base::CoreMetrics;
-use tracing::{debug, error, info};
+use tracing::{debug};
 
 /// Message sent to the FSR provider
 #[derive(Debug)]
@@ -36,7 +35,7 @@ pub struct PolymerFSRProvider {
 
 impl PolymerFSRProvider {
     /// Fetch a proof for a message
-    pub async fn fetch_proof(&self, request: &FSRRequest) -> Result<Bytes> {
+    pub async fn fetch_proof(&self, request: &FSRRequest) -> Result<FSRResponse> {
         debug!(
             chain_id = request.chain_id,
             block_number = request.block_number,
@@ -85,7 +84,7 @@ impl PolymerFSRProvider {
             let result = response.json::<serde_json::Value>().await?;
             if result["status"] == "ready" || result["status"] == "complete" {
                 let proof = general_purpose::STANDARD.decode(result["proof"].as_str().unwrap())?;
-                return Ok(Bytes::from(proof));
+                return Ok(FSRResponse { proof: Bytes::from(proof) });
             }
 
             attempts += 1;
