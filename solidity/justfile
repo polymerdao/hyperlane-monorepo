@@ -1,105 +1,105 @@
-rpc_endpoint_b3 := "https://sepolia.b3.fun/http"
-rpc_endpoint_ape := "https://curtis.rpc.caldera.xyz/http"
-chain_id_b3 := "1993"
-chain_id_ape := "33111"
-polymer_prover_addr := "0xcDa03d74DEc5B24071D1799899B2e0653C24e5Fa"
-mailbox_contract_addr_b3 := "0x840e5aada7a7aab5f06c5d3152512a246792183f"
-mailbox_contract_addr_ape := "0xd3dd44aadd6c790322c3a8da37d6b9a6d72f5c28"
-polymer_ism_addr_b3 := "0x5615c90c3142ebbb5bba6dde1616251581d1f16c"
-polymer_ism_addr_ape := "0x5dfe4bb5aa44e459980ac1804aea4593af088cb9"
-default_fallback_routing_ism_addr_b3 := "0x201d9d1da9a31dd8966f54e3466f615b72e53c46"
-default_fallback_routing_ism_addr_ape := "0xb9579911530c36165c9e3f09ed02af47763b4fbc"
-simple_sender_receiver_addr_b3 := "0xf689811ed7fed46ae6ca9251d62d9d1cc528ba5a"
-simple_sender_receiver_addr_ape := "0x840e5aada7a7aab5f06c5d3152512a246792183f"
+rpc_endpoint_base := env_var_or_default("BASE_RPC_URL", "")
+rpc_endpoint_everclear := env_var_or_default("EVERCLEAR_RPC_URL", "")
+chain_id_base := "8453"
+chain_id_everclear := "25327"
+polymer_prover_addr := "0x441f16587d8a8cACE647352B24E1Aefa55ACEA76"
+mailbox_contract_addr_base := "0xeA87ae93Fa0019a82A727bfd3eBd1cFCa8f64f1D" #TODO: update to shadownet 
+mailbox_contract_addr_everclear := "0x7f50C5776722630a0024fAE05fDe8b47571D7B39" #TODO: update to shadownet
+polymer_ism_addr_base := "0xABc84968376556B5e5B3C3bda750D091a06De536"
+polymer_ism_addr_everclear := "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+default_fallback_routing_ism_addr_base := "0xFf8FA9381caf61cB3368a6ec0b3F5C788028D0Cd"
+default_fallback_routing_ism_addr_everclear := "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+simple_sender_receiver_addr_base := "0x29e95B6bbCd23fbF66e9d8ee2029564A734560De"
+simple_sender_receiver_addr_everclear := "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
 
-deploy-mailbox-b3:
-    export HYPERLANE_DOMAIN_ID="{{ chain_id_b3 }}" && \
+deploy-mailbox-base:
+    export HYPERLANE_DOMAIN_ID="{{ chain_id_base }}" && \
     forge script script/DeployMailbox.s.sol:DeployMailbox \
-        --rpc-url "{{ rpc_endpoint_b3 }}" \
+        --rpc-url "{{ rpc_endpoint_base }}" \
         --broadcast \
         -vvvv
 
-deploy-mailbox-ape:
-    export HYPERLANE_DOMAIN_ID="{{ chain_id_ape }}" && \
+deploy-mailbox-everclear:
+    export HYPERLANE_DOMAIN_ID="{{ chain_id_everclear }}" && \
     forge script script/DeployMailbox.s.sol:DeployMailbox \
-        --rpc-url "{{ rpc_endpoint_ape }}" \
+        --rpc-url "{{ rpc_endpoint_everclear }}" \
         --broadcast \
         -vvvv
 
-deploy-polymer-ism-b3:
-    export ORIGIN_MAILBOX_ADDRESS="{{ mailbox_contract_addr_ape }}" && \
+deploy-polymer-ism-base:
+    export ORIGIN_MAILBOX_ADDRESS="{{ mailbox_contract_addr_everclear }}" && \
     export POLYMER_PROVER_ADDRESS="{{ polymer_prover_addr }}" && \
     forge script script/DeployPolymerIsm.s.sol:DeployPolymerIsm \
-        --rpc-url "{{ rpc_endpoint_b3 }}" \
+        --rpc-url "{{ rpc_endpoint_base }}" \
         --broadcast \
         -vvvv
 
-deploy-polymer-ism-ape:
-    export ORIGIN_MAILBOX_ADDRESS="{{ mailbox_contract_addr_b3 }}" && \
+deploy-polymer-ism-everclear:
+    export ORIGIN_MAILBOX_ADDRESS="{{ mailbox_contract_addr_base }}" && \
     export POLYMER_PROVER_ADDRESS="{{ polymer_prover_addr }}" && \
     forge script script/DeployPolymerIsm.s.sol:DeployPolymerIsm \
-        --rpc-url "{{ rpc_endpoint_ape }}" \
+        --rpc-url "{{ rpc_endpoint_everclear }}" \
         --broadcast \
         -vvvv
 
-deploy-default-fallback-routing-ism-b3:
-    export LOCAL_MAILBOX_ADDRESS="{{ mailbox_contract_addr_b3 }}" && \
-    export REMOTE_ORIGIN_DOMAIN_ID="{{ chain_id_ape }}" && \
-    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS="{{ polymer_ism_addr_b3 }}" && \
+deploy-default-fallback-routing-ism-base:
+    export LOCAL_MAILBOX_ADDRESS="{{ mailbox_contract_addr_base }}" && \
+    export REMOTE_ORIGIN_DOMAIN_ID="{{ chain_id_everclear }}" && \
+    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS="{{ polymer_ism_addr_base }}" && \
     forge script script/DeployDefaultFallbackRoutingIsm.s.sol:DeployDefaultFallbackRoutingIsm \
-        --rpc-url "{{ rpc_endpoint_b3 }}" \
+        --rpc-url "{{ rpc_endpoint_base }}" \
         --broadcast \
         -vvvv
 
-deploy-default-fallback-routing-ism-ape:
-    export LOCAL_MAILBOX_ADDRESS="{{ mailbox_contract_addr_ape }}" && \
-    export REMOTE_ORIGIN_DOMAIN_ID="{{ chain_id_b3 }}" && \
-    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS="{{ polymer_ism_addr_ape }}" && \
+deploy-default-fallback-routing-ism-everclear:
+    export LOCAL_MAILBOX_ADDRESS="{{ mailbox_contract_addr_everclear }}" && \
+    export REMOTE_ORIGIN_DOMAIN_ID="{{ chain_id_base }}" && \
+    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS="{{ polymer_ism_addr_everclear }}" && \
     forge script script/DeployDefaultFallbackRoutingIsm.s.sol:DeployDefaultFallbackRoutingIsm \
-        --rpc-url "{{ rpc_endpoint_ape }}" \
+        --rpc-url "{{ rpc_endpoint_everclear }}" \
         --broadcast \
         -vvvv
 
-deploy-simple-app-b3:
-    export MAILBOX_ADDRESS="{{ mailbox_contract_addr_b3 }}" && \
-    export ISM_ADDRESS="{{ default_fallback_routing_ism_addr_b3 }}" && \
+deploy-simple-app-base:
+    export MAILBOX_ADDRESS="{{ mailbox_contract_addr_base }}" && \
+    export ISM_ADDRESS="{{ default_fallback_routing_ism_addr_base }}" && \
     forge script script/DeploySimpleMessageSenderReceiver.s.sol:DeploySimpleMessageSenderReceiver \
-        --rpc-url "{{ rpc_endpoint_b3 }}" \
+        --rpc-url "{{ rpc_endpoint_base }}" \
         --broadcast \
         -vvvv
 
-deploy-simple-app-ape:
-    export MAILBOX_ADDRESS="{{ mailbox_contract_addr_ape }}" && \
-    export ISM_ADDRESS="{{ default_fallback_routing_ism_addr_ape }}" && \
+deploy-simple-app-everclear:
+    export MAILBOX_ADDRESS="{{ mailbox_contract_addr_everclear }}" && \
+    export ISM_ADDRESS="{{ default_fallback_routing_ism_addr_everclear }}" && \
     forge script script/DeploySimpleMessageSenderReceiver.s.sol:DeploySimpleMessageSenderReceiver \
-        --rpc-url "{{ rpc_endpoint_ape }}" \
+        --rpc-url "{{ rpc_endpoint_everclear }}" \
         --broadcast \
         -vvvv
 
-send-message-b3-to-ape:
-    export SENDER_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_b3 }}" && \
-    export DESTINATION_DOMAIN="{{ chain_id_ape }}" && \
-    export RECIPIENT_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_ape }}" && \
-    export MESSAGE_CONTENT="Hello from B3 to Ape!" && \
+send-message-base-to-everclear:
+    export SENDER_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_base }}" && \
+    export DESTINATION_DOMAIN="{{ chain_id_everclear }}" && \
+    export RECIPIENT_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_everclear }}" && \
+    export MESSAGE_CONTENT="Hello from base to everclear!" && \
     forge script script/SendMessage.s.sol:SendMessage \
-        --rpc-url "{{ rpc_endpoint_b3 }}" \
+        --rpc-url "{{ rpc_endpoint_base }}" \
         --broadcast \
         -vvvv
 
-send-message-ape-to-b3:
-    export SENDER_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_ape }}" && \
-    export DESTINATION_DOMAIN="{{ chain_id_b3 }}" && \
-    export RECIPIENT_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_b3 }}" && \
-    export MESSAGE_CONTENT="Hello from Ape Curtis to B3 Sepolia!" && \
+send-message-everclear-to-base:
+    export SENDER_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_everclear }}" && \
+    export DESTINATION_DOMAIN="{{ chain_id_base }}" && \
+    export RECIPIENT_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_base }}" && \
+    export MESSAGE_CONTENT="Hello from everclear Curtis to base Sepolia!" && \
     forge script script/SendMessage.s.sol:SendMessage \
-        --rpc-url "{{ rpc_endpoint_ape }}" \
+        --rpc-url "{{ rpc_endpoint_everclear }}" \
         --broadcast \
         -vvvv
 
-test-mailbox-contract-deployment-b3:
-    cast call "{{ mailbox_contract_addr_b3 }}" "requiredHook()" --rpc-url "{{ rpc_endpoint_b3 }}"
-    cast call "{{ mailbox_contract_addr_b3 }}" "nonce()" --rpc-url "{{ rpc_endpoint_b3 }}"
+test-mailbox-contract-deployment-base:
+    cast call "{{ mailbox_contract_addr_base }}" "requiredHook()" --rpc-url "{{ rpc_endpoint_base }}"
+    cast call "{{ mailbox_contract_addr_base }}" "nonce()" --rpc-url "{{ rpc_endpoint_base }}"
 
-test-mailbox-contract-deployment-ape:
-    cast call "{{ mailbox_contract_addr_ape }}" "requiredHook()" --rpc-url "{{ rpc_endpoint_ape }}"
-    cast call "{{ mailbox_contract_addr_ape }}" "nonce()" --rpc-url "{{ rpc_endpoint_ape }}"
+test-mailbox-contract-deployment-everclear:
+    cast call "{{ mailbox_contract_addr_everclear }}" "requiredHook()" --rpc-url "{{ rpc_endpoint_everclear }}"
+    cast call "{{ mailbox_contract_addr_everclear }}" "nonce()" --rpc-url "{{ rpc_endpoint_everclear }}"
