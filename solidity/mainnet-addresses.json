@@ -1,0 +1,28 @@
+{
+  "84532": {
+    "Mailbox": "0x985c0b67E934ce355d869412a3b92e1F6e9A7594",
+    "PolymerISM": "0x537a69456c6FbE6C9BBfa107b759F20e127F137B",
+    "DefaultFallbackRoutingIsm": "0x870ef54e662eaD2CC1a3985a2E9aEf4f664d91B1",
+    "SimpleMessageSenderReceiver": "0x33EFa2678565C2076c0108ED51874a89832f815b"
+  },
+  "11155111": {
+    "Mailbox": "0xd9972e28123e6867592E89c9dd35a916aB2Ff58a",
+    "PolymerISM": "0x176a0d14401e4f3f923f6284af641bEfEA74cAA9",
+    "DefaultFallbackRoutingIsm": "0x80357119D2b3d698E886d9CB8e0473DbDF95eD88",
+    "SimpleMessageSenderReceiver": "0x78985ef5AeC240F5c4B2922Efd0592D1d2FA2907"
+  },
+  "728126428": {
+    "Mailbox": "0x5B34081E9d453fc2bA925D893583D89d1b7175dd"
+  },
+  "8453": {
+    "Mailbox": "0xd84ab43d7f2f99339657e4bfae3c955be8d3099c",
+    "DefaultFallbackRoutingIsm": "",
+    "PolymerISM": "0x347e73edde76e71976C3090f9Fc5C9FBc5b52cAA"
+  },
+  "25327": {
+    "Mailbox": "0x7f50C5776722630a0024fAE05fDe8b47571D7B39",
+    "PolymerISM": "0xd3420D4069F6836cc54BEa26E631B4Db26d5387e",
+    "DefaultFallbackRoutingIsm": "0x023C5B5073De22A955AED00195b6c9A5Eea11592",
+    "SimpleMessageSenderReceiver": "0x51Ad8CB8cB1818868b092DD864c78d2e53ee83fB"
+  }
+}
