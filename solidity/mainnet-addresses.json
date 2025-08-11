@@ -17,12 +17,13 @@
   "8453": {
     "Mailbox": "0xd84ab43d7f2f99339657e4bfae3c955be8d3099c",
     "DefaultFallbackRoutingIsm": "",
-    "PolymerISM": "0x347e73edde76e71976C3090f9Fc5C9FBc5b52cAA"
+    "PolymerISM": "0x347e73edde76e71976C3090f9Fc5C9FBc5b52cAA",
+    "SimpleMessageSenderReceiver": "0x7cdF687F6a5CA657c554c5894145AdA399149467"
   },
   "25327": {
     "Mailbox": "0x7f50C5776722630a0024fAE05fDe8b47571D7B39",
-    "PolymerISM": "0xd3420D4069F6836cc54BEa26E631B4Db26d5387e",
+    "PolymerISM": "0xCAc98e936f71eb8727a39e1db8ACAC13350E7ba2",
     "DefaultFallbackRoutingIsm": "0x023C5B5073De22A955AED00195b6c9A5Eea11592",
-    "SimpleMessageSenderReceiver": "0x51Ad8CB8cB1818868b092DD864c78d2e53ee83fB"
+    "SimpleMessageSenderReceiver": "0x14b99d9fFC4Df92B7418baa2A126453F5258E375"
   }
 }
