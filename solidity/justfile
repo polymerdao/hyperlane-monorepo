@@ -5,6 +5,7 @@ chain_id_ethereum := "1"
 chain_id_everclear_staging := "25327"
 chain_id_base := "8453"
 chain_id_tron_nile := "3448148188"
+chain_id_tron_mainnet := "728126428"
 
 polymer_prover_addr_mainnet := "0x95ccEAE71605c5d97A0AC0EA13013b058729d075"
 
@@ -30,9 +31,10 @@ polymer_ism_addr_ethereum_for_everclear_staging := "0x5DF842c9e557A34431d43f48e7
 
 # Domain routing mailboxes
 # Testing Dapps 
-simple_sender_receiver_addr_everclear_staging := "0x9e76B82AF2209D113beaa676113A7A8a0792e7B4"
-simple_sender_receiver_addr_base := "0xF022683a3dCeD60d21B44ADCF1856beEB64e6c96"
-simple_sender_receiver_addr_ethereum :="0xFF9aA19636c327a5c64941448462B07E103E7206"
+simple_sender_receiver_addr_everclear_staging := "0x14b99d9fFC4Df92B7418baa2A126453F5258E375"
+simple_sender_receiver_addr_base := "0x7cdF687F6a5CA657c554c5894145AdA399149467"
+simple_sender_receiver_addr_ethereum := "0xFF9aA19636c327a5c64941448462B07E103E7206"
+simple_sender_receiver_addr_tron_mainnet := "0x093DED387E5D798DE46D19130B34713DE36F4E5C"
 
 # Not sure what these are, keeping here in case they become relevant
 default_mailbox_contract_addr_everclear_staging := "0xd84ab43d7f2f99339657e4bfae3c955be8d3099c"
@@ -228,6 +230,16 @@ send-message-base-to-everclear-staging:
     export MESSAGE_CONTENT="Hello from Base to Everclear Staging!" && \
     forge script script/SendMessage.s.sol:SendMessage \
         --rpc-url "{{ rpc_endpoint_base }}" \
+        --broadcast \
+        -vvvv
+
+send-message-everclear-to-tron:
+    export SENDER_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_everclear_staging }}" && \
+    export DESTINATION_DOMAIN="{{ chain_id_tron_mainnet }}" && \
+    export RECIPIENT_CONTRACT_ADDRESS="{{ simple_sender_receiver_addr_tron_mainnet}}" && \
+    export MESSAGE_CONTENT="Hello from Everclear Staging to Tron!" && \
+    forge script script/SendMessage.s.sol:SendMessage \
+        --rpc-url "{{ rpc_endpoint_everclear_staging }}" \
         --broadcast \
         -vvvv
 
