@@ -1,0 +1,2150 @@
+{
+  "contractName": "MockHook",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "hookType",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "_metadata",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_message",
+          "type": "bytes"
+        }
+      ],
+      "name": "postDispatch",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "_metadata",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_message",
+          "type": "bytes"
+        }
+      ],
+      "name": "quoteDispatch",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "name": "supportsMetadata",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b50d3801561001d57600080fd5b50d2801561002a57600080fd5b5061025c8061003a6000396000f3fe60806040526004361061003f5760003560e01c8063086011b914610044578063aaccd2301461005a578063e445e7dd146100ac578063e5320bb9146100e2575b600080fd5b6100586100523660046101ba565b50505050565b005b34801561006657600080fd5b50d3801561007357600080fd5b50d2801561008057600080fd5b5061009961008f3660046101ba565b6000949350505050565b6040519081526020015b60405180910390f35b3480156100b857600080fd5b50d380156100c557600080fd5b50d280156100d257600080fd5b50604051600081526020016100a3565b3480156100ee57600080fd5b50d380156100fb57600080fd5b50d2801561010857600080fd5b5061011f610117366004610178565b600192915050565b60405190151581526020016100a3565b60008083601f84011261014157600080fd5b50813567ffffffffffffffff81111561015957600080fd5b60208301915083602082850101111561017157600080fd5b9250929050565b6000806020838503121561018b57600080fd5b823567ffffffffffffffff8111156101a257600080fd5b6101ae8582860161012f565b90969095509350505050565b600080600080604085870312156101d057600080fd5b843567ffffffffffffffff808211156101e857600080fd5b6101f48883890161012f565b9096509450602087013591508082111561020d57600080fd5b5061021a8782880161012f565b9598949750955050505056fea26474726f6e5822122055a23a05f23732ff99943494c3c649cc6ab7f5fb26773fc2014893081fcc10c964736f6c63430008060033",
+  "deployedBytecode": "0x60806040526004361061003f5760003560e01c8063086011b914610044578063aaccd2301461005a578063e445e7dd146100ac578063e5320bb9146100e2575b600080fd5b6100586100523660046101ba565b50505050565b005b34801561006657600080fd5b50d3801561007357600080fd5b50d2801561008057600080fd5b5061009961008f3660046101ba565b6000949350505050565b6040519081526020015b60405180910390f35b3480156100b857600080fd5b50d380156100c557600080fd5b50d280156100d257600080fd5b50604051600081526020016100a3565b3480156100ee57600080fd5b50d380156100fb57600080fd5b50d2801561010857600080fd5b5061011f610117366004610178565b600192915050565b60405190151581526020016100a3565b60008083601f84011261014157600080fd5b50813567ffffffffffffffff81111561015957600080fd5b60208301915083602082850101111561017157600080fd5b9250929050565b6000806020838503121561018b57600080fd5b823567ffffffffffffffff8111156101a257600080fd5b6101ae8582860161012f565b90969095509350505050565b600080600080604085870312156101d057600080fd5b843567ffffffffffffffff808211156101e857600080fd5b6101f48883890161012f565b9096509450602087013591508082111561020d57600080fd5b5061021a8782880161012f565b9598949750955050505056fea26474726f6e5822122055a23a05f23732ff99943494c3c649cc6ab7f5fb26773fc2014893081fcc10c964736f6c63430008060033",
+  "sourceMap": "2054:761:4:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "2054:761:4:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2099:162;;;;;;:::i;:::-;;;;;;;;2267:203;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;2267:203:4;;;;;:::i;:::-;2395:7;2267:203;;;;;;;;;;1840:25:9;;;1828:2;1813:18;2267:203:4;;;;;;;;2514:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;2514:84:4;;2566:5;2018:36:9;;2006:2;1991:18;2514:84:4;1973:87:9;2642:171:4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;2642:171:4;;;;;:::i;:::-;2767:4;2642:171;;;;;;;;1667:14:9;;1660:22;1642:41;;1630:2;1615:18;2642:171:4;1597:92:9;14:347;65:8;75:6;129:3;122:4;114:6;110:17;106:27;96:2;;147:1;144;137:12;96:2;-1:-1:-1;170:20:9;;213:18;202:30;;199:2;;;245:1;242;235:12;199:2;282:4;274:6;270:17;258:29;;334:3;327:4;318:6;310;306:19;302:30;299:39;296:2;;;351:1;348;341:12;296:2;86:275;;;;;:::o;366:409::-;436:6;444;497:2;485:9;476:7;472:23;468:32;465:2;;;513:1;510;503:12;465:2;553:9;540:23;586:18;578:6;575:30;572:2;;;618:1;615;608:12;572:2;657:58;707:7;698:6;687:9;683:22;657:58;:::i;:::-;734:8;;631:84;;-1:-1:-1;455:320:9;-1:-1:-1;;;;455:320:9:o;780:717::-;870:6;878;886;894;947:2;935:9;926:7;922:23;918:32;915:2;;;963:1;960;953:12;915:2;1003:9;990:23;1032:18;1073:2;1065:6;1062:14;1059:2;;;1089:1;1086;1079:12;1059:2;1128:58;1178:7;1169:6;1158:9;1154:22;1128:58;:::i;:::-;1205:8;;-1:-1:-1;1102:84:9;-1:-1:-1;1293:2:9;1278:18;;1265:32;;-1:-1:-1;1309:16:9;;;1306:2;;;1338:1;1335;1328:12;1306:2;;1377:60;1429:7;1418:8;1407:9;1403:24;1377:60;:::i;:::-;905:592;;;;-1:-1:-1;1456:8:9;-1:-1:-1;;;;905:592:9:o",
+  "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity >=0.8.0 ^0.8.0;\n\n// contracts/interfaces/hooks/IPostDispatchHook.sol\n\n/*@@@@@@@       @@@@@@@@@\n @@@@@@@@@       @@@@@@@@@\n  @@@@@@@@@       @@@@@@@@@\n   @@@@@@@@@       @@@@@@@@@\n    @@@@@@@@@@@@@@@@@@@@@@@@@\n     @@@@@  HYPERLANE  @@@@@@@\n    @@@@@@@@@@@@@@@@@@@@@@@@@\n   @@@@@@@@@       @@@@@@@@@\n  @@@@@@@@@       @@@@@@@@@\n @@@@@@@@@       @@@@@@@@@\n@@@@@@@@@       @@@@@@@@*/\n\ninterface IPostDispatchHook {\n    enum Types {\n        UNUSED,\n        ROUTING,\n        AGGREGATION,\n        MERKLE_TREE,\n        INTERCHAIN_GAS_PAYMASTER,\n        FALLBACK_ROUTING,\n        ID_AUTH_ISM,\n        PAUSABLE,\n        PROTOCOL_FEE,\n        LAYER_ZERO_V1,\n        RATE_LIMITED,\n        ARB_L2_TO_L1,\n        OP_L2_TO_L1,\n        MAILBOX_DEFAULT_HOOK,\n        AMOUNT_ROUTING\n    }\n\n    /**\n     * @notice Returns an enum that represents the type of hook\n     */\n    function hookType() external view returns (uint8);\n\n    /**\n     * @notice Returns whether the hook supports metadata\n     * @param metadata metadata\n     * @return Whether the hook supports metadata\n     */\n    function supportsMetadata(\n        bytes calldata metadata\n    ) external view returns (bool);\n\n    /**\n     * @notice Post action after a message is dispatched via the Mailbox\n     * @param metadata The metadata required for the hook\n     * @param message The message passed from the Mailbox.dispatch() call\n     */\n    function postDispatch(\n        bytes calldata metadata,\n        bytes calldata message\n    ) external payable;\n\n    /**\n     * @notice Compute the payment required by the postDispatch call\n     * @param metadata The metadata required for the hook\n     * @param message The message passed from the Mailbox.dispatch() call\n     * @return Quoted payment for the postDispatch call\n     */\n    function quoteDispatch(\n        bytes calldata metadata,\n        bytes calldata message\n    ) external view returns (uint256);\n}\n\n// contracts/mock/MockHook.sol\n\n/// @notice Mock implementation of a Post Dispatch Hook.\ncontract MockHook is IPostDispatchHook {\n    function postDispatch(\n        bytes calldata _metadata,\n        bytes calldata _message\n    ) external payable override {\n        // Mock hook does nothing\n    }\n\n    function quoteDispatch(\n        bytes calldata _metadata,\n        bytes calldata _message\n    ) external view override returns (uint256) {\n        // Mock hook requires no payment\n        return 0;\n    }\n\n    /// @inheritdoc IPostDispatchHook\n    function hookType() external view override returns (uint8) {\n        return 0;\n    }\n\n    /// @inheritdoc IPostDispatchHook\n    function supportsMetadata(\n        bytes calldata /*_metadata*/\n    ) external view override returns (bool) {\n        return true; // Mock hook supports any metadata\n    }\n}\n\n",
+  "sourcePath": "/Users/raunaksingh/Code/hyperlane-monorepo/solidity/tron-deployment/contracts/MockHook.flatten.sol",
+  "ast": {
+    "absolutePath": "/Users/raunaksingh/Code/hyperlane-monorepo/solidity/tron-deployment/contracts/MockHook.flatten.sol",
+    "exportedSymbols": {
+      "IPostDispatchHook": [
+        3157
+      ],
+      "MockHook": [
+        3205
+      ]
+    },
+    "id": 3206,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3108,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:31:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 3157,
+        "linearizedBaseContracts": [
+          3157
+        ],
+        "name": "IPostDispatchHook",
+        "nameLocation": "448:17:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IPostDispatchHook.Types",
+            "id": 3124,
+            "members": [
+              {
+                "id": 3109,
+                "name": "UNUSED",
+                "nameLocation": "493:6:4",
+                "nodeType": "EnumValue",
+                "src": "493:6:4"
+              },
+              {
+                "id": 3110,
+                "name": "ROUTING",
+                "nameLocation": "509:7:4",
+                "nodeType": "EnumValue",
+                "src": "509:7:4"
+              },
+              {
+                "id": 3111,
+                "name": "AGGREGATION",
+                "nameLocation": "526:11:4",
+                "nodeType": "EnumValue",
+                "src": "526:11:4"
+              },
+              {
+                "id": 3112,
+                "name": "MERKLE_TREE",
+                "nameLocation": "547:11:4",
+                "nodeType": "EnumValue",
+                "src": "547:11:4"
+              },
+              {
+                "id": 3113,
+                "name": "INTERCHAIN_GAS_PAYMASTER",
+                "nameLocation": "568:24:4",
+                "nodeType": "EnumValue",
+                "src": "568:24:4"
+              },
+              {
+                "id": 3114,
+                "name": "FALLBACK_ROUTING",
+                "nameLocation": "602:16:4",
+                "nodeType": "EnumValue",
+                "src": "602:16:4"
+              },
+              {
+                "id": 3115,
+                "name": "ID_AUTH_ISM",
+                "nameLocation": "628:11:4",
+                "nodeType": "EnumValue",
+                "src": "628:11:4"
+              },
+              {
+                "id": 3116,
+                "name": "PAUSABLE",
+                "nameLocation": "649:8:4",
+                "nodeType": "EnumValue",
+                "src": "649:8:4"
+              },
+              {
+                "id": 3117,
+                "name": "PROTOCOL_FEE",
+                "nameLocation": "667:12:4",
+                "nodeType": "EnumValue",
+                "src": "667:12:4"
+              },
+              {
+                "id": 3118,
+                "name": "LAYER_ZERO_V1",
+                "nameLocation": "689:13:4",
+                "nodeType": "EnumValue",
+                "src": "689:13:4"
+              },
+              {
+                "id": 3119,
+                "name": "RATE_LIMITED",
+                "nameLocation": "712:12:4",
+                "nodeType": "EnumValue",
+                "src": "712:12:4"
+              },
+              {
+                "id": 3120,
+                "name": "ARB_L2_TO_L1",
+                "nameLocation": "734:12:4",
+                "nodeType": "EnumValue",
+                "src": "734:12:4"
+              },
+              {
+                "id": 3121,
+                "name": "OP_L2_TO_L1",
+                "nameLocation": "756:11:4",
+                "nodeType": "EnumValue",
+                "src": "756:11:4"
+              },
+              {
+                "id": 3122,
+                "name": "MAILBOX_DEFAULT_HOOK",
+                "nameLocation": "777:20:4",
+                "nodeType": "EnumValue",
+                "src": "777:20:4"
+              },
+              {
+                "id": 3123,
+                "name": "AMOUNT_ROUTING",
+                "nameLocation": "807:14:4",
+                "nodeType": "EnumValue",
+                "src": "807:14:4"
+              }
+            ],
+            "name": "Types",
+            "nameLocation": "477:5:4",
+            "nodeType": "EnumDefinition",
+            "src": "472:355:4"
+          },
+          {
+            "documentation": {
+              "id": 3125,
+              "nodeType": "StructuredDocumentation",
+              "src": "833:75:4",
+              "text": " @notice Returns an enum that represents the type of hook"
+            },
+            "functionSelector": "e445e7dd",
+            "id": 3130,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hookType",
+            "nameLocation": "922:8:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3126,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "930:2:4"
+            },
+            "returnParameters": {
+              "id": 3129,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3128,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3130,
+                  "src": "956:5:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 3127,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "956:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "955:7:4"
+            },
+            "scope": 3157,
+            "src": "913:50:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3131,
+              "nodeType": "StructuredDocumentation",
+              "src": "969:151:4",
+              "text": " @notice Returns whether the hook supports metadata\n @param metadata metadata\n @return Whether the hook supports metadata"
+            },
+            "functionSelector": "e5320bb9",
+            "id": 3138,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsMetadata",
+            "nameLocation": "1134:16:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3134,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3133,
+                  "mutability": "mutable",
+                  "name": "metadata",
+                  "nameLocation": "1175:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3138,
+                  "src": "1160:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3132,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1160:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1150:39:4"
+            },
+            "returnParameters": {
+              "id": 3137,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3136,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3138,
+                  "src": "1213:4:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3135,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1213:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1212:6:4"
+            },
+            "scope": 3157,
+            "src": "1125:94:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3139,
+              "nodeType": "StructuredDocumentation",
+              "src": "1225:216:4",
+              "text": " @notice Post action after a message is dispatched via the Mailbox\n @param metadata The metadata required for the hook\n @param message The message passed from the Mailbox.dispatch() call"
+            },
+            "functionSelector": "086011b9",
+            "id": 3146,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "postDispatch",
+            "nameLocation": "1455:12:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3144,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3141,
+                  "mutability": "mutable",
+                  "name": "metadata",
+                  "nameLocation": "1492:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3146,
+                  "src": "1477:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3140,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1477:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3143,
+                  "mutability": "mutable",
+                  "name": "message",
+                  "nameLocation": "1525:7:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3146,
+                  "src": "1510:22:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3142,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1510:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1467:71:4"
+            },
+            "returnParameters": {
+              "id": 3145,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1555:0:4"
+            },
+            "scope": 3157,
+            "src": "1446:110:4",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3147,
+              "nodeType": "StructuredDocumentation",
+              "src": "1562:268:4",
+              "text": " @notice Compute the payment required by the postDispatch call\n @param metadata The metadata required for the hook\n @param message The message passed from the Mailbox.dispatch() call\n @return Quoted payment for the postDispatch call"
+            },
+            "functionSelector": "aaccd230",
+            "id": 3156,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "quoteDispatch",
+            "nameLocation": "1844:13:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3152,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3149,
+                  "mutability": "mutable",
+                  "name": "metadata",
+                  "nameLocation": "1882:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3156,
+                  "src": "1867:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3148,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1867:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3151,
+                  "mutability": "mutable",
+                  "name": "message",
+                  "nameLocation": "1915:7:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3156,
+                  "src": "1900:22:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3150,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1900:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1857:71:4"
+            },
+            "returnParameters": {
+              "id": 3155,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3154,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3156,
+                  "src": "1952:7:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3153,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1952:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1951:9:4"
+            },
+            "scope": 3157,
+            "src": "1835:126:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3206,
+        "src": "438:1525:4",
+        "usedErrors": []
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3159,
+              "name": "IPostDispatchHook",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 3157,
+              "src": "2075:17:4"
+            },
+            "id": 3160,
+            "nodeType": "InheritanceSpecifier",
+            "src": "2075:17:4"
+          }
+        ],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 3158,
+          "nodeType": "StructuredDocumentation",
+          "src": "1997:57:4",
+          "text": "@notice Mock implementation of a Post Dispatch Hook."
+        },
+        "fullyImplemented": true,
+        "id": 3205,
+        "linearizedBaseContracts": [
+          3205,
+          3157
+        ],
+        "name": "MockHook",
+        "nameLocation": "2063:8:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "baseFunctions": [
+              3146
+            ],
+            "body": {
+              "id": 3168,
+              "nodeType": "Block",
+              "src": "2220:41:4",
+              "statements": []
+            },
+            "functionSelector": "086011b9",
+            "id": 3169,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "postDispatch",
+            "nameLocation": "2108:12:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3166,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2211:8:4"
+            },
+            "parameters": {
+              "id": 3165,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3162,
+                  "mutability": "mutable",
+                  "name": "_metadata",
+                  "nameLocation": "2145:9:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3169,
+                  "src": "2130:24:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3161,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2130:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3164,
+                  "mutability": "mutable",
+                  "name": "_message",
+                  "nameLocation": "2179:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3169,
+                  "src": "2164:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3163,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2164:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2120:73:4"
+            },
+            "returnParameters": {
+              "id": 3167,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2220:0:4"
+            },
+            "scope": 3205,
+            "src": "2099:162:4",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              3156
+            ],
+            "body": {
+              "id": 3181,
+              "nodeType": "Block",
+              "src": "2404:66:4",
+              "statements": [
+                {
+                  "expression": {
+                    "hexValue": "30",
+                    "id": 3179,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2462:1:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_0_by_1",
+                      "typeString": "int_const 0"
+                    },
+                    "value": "0"
+                  },
+                  "functionReturnParameters": 3178,
+                  "id": 3180,
+                  "nodeType": "Return",
+                  "src": "2455:8:4"
+                }
+              ]
+            },
+            "functionSelector": "aaccd230",
+            "id": 3182,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "quoteDispatch",
+            "nameLocation": "2276:13:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3175,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2377:8:4"
+            },
+            "parameters": {
+              "id": 3174,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3171,
+                  "mutability": "mutable",
+                  "name": "_metadata",
+                  "nameLocation": "2314:9:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3182,
+                  "src": "2299:24:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3170,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2299:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3173,
+                  "mutability": "mutable",
+                  "name": "_message",
+                  "nameLocation": "2348:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3182,
+                  "src": "2333:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3172,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2333:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2289:73:4"
+            },
+            "returnParameters": {
+              "id": 3178,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3177,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3182,
+                  "src": "2395:7:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3176,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2395:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2394:9:4"
+            },
+            "scope": 3205,
+            "src": "2267:203:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              3130
+            ],
+            "body": {
+              "id": 3191,
+              "nodeType": "Block",
+              "src": "2573:25:4",
+              "statements": [
+                {
+                  "expression": {
+                    "hexValue": "30",
+                    "id": 3189,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2590:1:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_0_by_1",
+                      "typeString": "int_const 0"
+                    },
+                    "value": "0"
+                  },
+                  "functionReturnParameters": 3188,
+                  "id": 3190,
+                  "nodeType": "Return",
+                  "src": "2583:8:4"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3183,
+              "nodeType": "StructuredDocumentation",
+              "src": "2476:33:4",
+              "text": "@inheritdoc IPostDispatchHook"
+            },
+            "functionSelector": "e445e7dd",
+            "id": 3192,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hookType",
+            "nameLocation": "2523:8:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3185,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2548:8:4"
+            },
+            "parameters": {
+              "id": 3184,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2531:2:4"
+            },
+            "returnParameters": {
+              "id": 3188,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3187,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3192,
+                  "src": "2566:5:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 3186,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2566:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2565:7:4"
+            },
+            "scope": 3205,
+            "src": "2514:84:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              3138
+            ],
+            "body": {
+              "id": 3203,
+              "nodeType": "Block",
+              "src": "2750:63:4",
+              "statements": [
+                {
+                  "expression": {
+                    "hexValue": "74727565",
+                    "id": 3201,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2767:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 3200,
+                  "id": 3202,
+                  "nodeType": "Return",
+                  "src": "2760:11:4"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3193,
+              "nodeType": "StructuredDocumentation",
+              "src": "2604:33:4",
+              "text": "@inheritdoc IPostDispatchHook"
+            },
+            "functionSelector": "e5320bb9",
+            "id": 3204,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsMetadata",
+            "nameLocation": "2651:16:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3197,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2726:8:4"
+            },
+            "parameters": {
+              "id": 3196,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3195,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3204,
+                  "src": "2677:14:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3194,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2677:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2667:44:4"
+            },
+            "returnParameters": {
+              "id": 3200,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3199,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3204,
+                  "src": "2744:4:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3198,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2744:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2743:6:4"
+            },
+            "scope": 3205,
+            "src": "2642:171:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3206,
+        "src": "2054:761:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "39:2778:4"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/raunaksingh/Code/hyperlane-monorepo/solidity/tron-deployment/contracts/MockHook.flatten.sol",
+    "exportedSymbols": {
+      "IPostDispatchHook": [
+        3157
+      ],
+      "MockHook": [
+        3205
+      ]
+    },
+    "id": 3206,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3108,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:31:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 3157,
+        "linearizedBaseContracts": [
+          3157
+        ],
+        "name": "IPostDispatchHook",
+        "nameLocation": "448:17:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IPostDispatchHook.Types",
+            "id": 3124,
+            "members": [
+              {
+                "id": 3109,
+                "name": "UNUSED",
+                "nameLocation": "493:6:4",
+                "nodeType": "EnumValue",
+                "src": "493:6:4"
+              },
+              {
+                "id": 3110,
+                "name": "ROUTING",
+                "nameLocation": "509:7:4",
+                "nodeType": "EnumValue",
+                "src": "509:7:4"
+              },
+              {
+                "id": 3111,
+                "name": "AGGREGATION",
+                "nameLocation": "526:11:4",
+                "nodeType": "EnumValue",
+                "src": "526:11:4"
+              },
+              {
+                "id": 3112,
+                "name": "MERKLE_TREE",
+                "nameLocation": "547:11:4",
+                "nodeType": "EnumValue",
+                "src": "547:11:4"
+              },
+              {
+                "id": 3113,
+                "name": "INTERCHAIN_GAS_PAYMASTER",
+                "nameLocation": "568:24:4",
+                "nodeType": "EnumValue",
+                "src": "568:24:4"
+              },
+              {
+                "id": 3114,
+                "name": "FALLBACK_ROUTING",
+                "nameLocation": "602:16:4",
+                "nodeType": "EnumValue",
+                "src": "602:16:4"
+              },
+              {
+                "id": 3115,
+                "name": "ID_AUTH_ISM",
+                "nameLocation": "628:11:4",
+                "nodeType": "EnumValue",
+                "src": "628:11:4"
+              },
+              {
+                "id": 3116,
+                "name": "PAUSABLE",
+                "nameLocation": "649:8:4",
+                "nodeType": "EnumValue",
+                "src": "649:8:4"
+              },
+              {
+                "id": 3117,
+                "name": "PROTOCOL_FEE",
+                "nameLocation": "667:12:4",
+                "nodeType": "EnumValue",
+                "src": "667:12:4"
+              },
+              {
+                "id": 3118,
+                "name": "LAYER_ZERO_V1",
+                "nameLocation": "689:13:4",
+                "nodeType": "EnumValue",
+                "src": "689:13:4"
+              },
+              {
+                "id": 3119,
+                "name": "RATE_LIMITED",
+                "nameLocation": "712:12:4",
+                "nodeType": "EnumValue",
+                "src": "712:12:4"
+              },
+              {
+                "id": 3120,
+                "name": "ARB_L2_TO_L1",
+                "nameLocation": "734:12:4",
+                "nodeType": "EnumValue",
+                "src": "734:12:4"
+              },
+              {
+                "id": 3121,
+                "name": "OP_L2_TO_L1",
+                "nameLocation": "756:11:4",
+                "nodeType": "EnumValue",
+                "src": "756:11:4"
+              },
+              {
+                "id": 3122,
+                "name": "MAILBOX_DEFAULT_HOOK",
+                "nameLocation": "777:20:4",
+                "nodeType": "EnumValue",
+                "src": "777:20:4"
+              },
+              {
+                "id": 3123,
+                "name": "AMOUNT_ROUTING",
+                "nameLocation": "807:14:4",
+                "nodeType": "EnumValue",
+                "src": "807:14:4"
+              }
+            ],
+            "name": "Types",
+            "nameLocation": "477:5:4",
+            "nodeType": "EnumDefinition",
+            "src": "472:355:4"
+          },
+          {
+            "documentation": {
+              "id": 3125,
+              "nodeType": "StructuredDocumentation",
+              "src": "833:75:4",
+              "text": " @notice Returns an enum that represents the type of hook"
+            },
+            "functionSelector": "e445e7dd",
+            "id": 3130,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hookType",
+            "nameLocation": "922:8:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3126,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "930:2:4"
+            },
+            "returnParameters": {
+              "id": 3129,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3128,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3130,
+                  "src": "956:5:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 3127,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "956:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "955:7:4"
+            },
+            "scope": 3157,
+            "src": "913:50:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3131,
+              "nodeType": "StructuredDocumentation",
+              "src": "969:151:4",
+              "text": " @notice Returns whether the hook supports metadata\n @param metadata metadata\n @return Whether the hook supports metadata"
+            },
+            "functionSelector": "e5320bb9",
+            "id": 3138,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsMetadata",
+            "nameLocation": "1134:16:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3134,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3133,
+                  "mutability": "mutable",
+                  "name": "metadata",
+                  "nameLocation": "1175:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3138,
+                  "src": "1160:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3132,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1160:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1150:39:4"
+            },
+            "returnParameters": {
+              "id": 3137,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3136,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3138,
+                  "src": "1213:4:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3135,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1213:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1212:6:4"
+            },
+            "scope": 3157,
+            "src": "1125:94:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3139,
+              "nodeType": "StructuredDocumentation",
+              "src": "1225:216:4",
+              "text": " @notice Post action after a message is dispatched via the Mailbox\n @param metadata The metadata required for the hook\n @param message The message passed from the Mailbox.dispatch() call"
+            },
+            "functionSelector": "086011b9",
+            "id": 3146,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "postDispatch",
+            "nameLocation": "1455:12:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3144,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3141,
+                  "mutability": "mutable",
+                  "name": "metadata",
+                  "nameLocation": "1492:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3146,
+                  "src": "1477:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3140,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1477:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3143,
+                  "mutability": "mutable",
+                  "name": "message",
+                  "nameLocation": "1525:7:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3146,
+                  "src": "1510:22:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3142,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1510:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1467:71:4"
+            },
+            "returnParameters": {
+              "id": 3145,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1555:0:4"
+            },
+            "scope": 3157,
+            "src": "1446:110:4",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3147,
+              "nodeType": "StructuredDocumentation",
+              "src": "1562:268:4",
+              "text": " @notice Compute the payment required by the postDispatch call\n @param metadata The metadata required for the hook\n @param message The message passed from the Mailbox.dispatch() call\n @return Quoted payment for the postDispatch call"
+            },
+            "functionSelector": "aaccd230",
+            "id": 3156,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "quoteDispatch",
+            "nameLocation": "1844:13:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3152,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3149,
+                  "mutability": "mutable",
+                  "name": "metadata",
+                  "nameLocation": "1882:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3156,
+                  "src": "1867:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3148,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1867:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3151,
+                  "mutability": "mutable",
+                  "name": "message",
+                  "nameLocation": "1915:7:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3156,
+                  "src": "1900:22:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3150,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1900:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1857:71:4"
+            },
+            "returnParameters": {
+              "id": 3155,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3154,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3156,
+                  "src": "1952:7:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3153,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1952:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1951:9:4"
+            },
+            "scope": 3157,
+            "src": "1835:126:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3206,
+        "src": "438:1525:4",
+        "usedErrors": []
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3159,
+              "name": "IPostDispatchHook",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 3157,
+              "src": "2075:17:4"
+            },
+            "id": 3160,
+            "nodeType": "InheritanceSpecifier",
+            "src": "2075:17:4"
+          }
+        ],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 3158,
+          "nodeType": "StructuredDocumentation",
+          "src": "1997:57:4",
+          "text": "@notice Mock implementation of a Post Dispatch Hook."
+        },
+        "fullyImplemented": true,
+        "id": 3205,
+        "linearizedBaseContracts": [
+          3205,
+          3157
+        ],
+        "name": "MockHook",
+        "nameLocation": "2063:8:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "baseFunctions": [
+              3146
+            ],
+            "body": {
+              "id": 3168,
+              "nodeType": "Block",
+              "src": "2220:41:4",
+              "statements": []
+            },
+            "functionSelector": "086011b9",
+            "id": 3169,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "postDispatch",
+            "nameLocation": "2108:12:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3166,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2211:8:4"
+            },
+            "parameters": {
+              "id": 3165,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3162,
+                  "mutability": "mutable",
+                  "name": "_metadata",
+                  "nameLocation": "2145:9:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3169,
+                  "src": "2130:24:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3161,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2130:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3164,
+                  "mutability": "mutable",
+                  "name": "_message",
+                  "nameLocation": "2179:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3169,
+                  "src": "2164:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3163,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2164:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2120:73:4"
+            },
+            "returnParameters": {
+              "id": 3167,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2220:0:4"
+            },
+            "scope": 3205,
+            "src": "2099:162:4",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              3156
+            ],
+            "body": {
+              "id": 3181,
+              "nodeType": "Block",
+              "src": "2404:66:4",
+              "statements": [
+                {
+                  "expression": {
+                    "hexValue": "30",
+                    "id": 3179,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2462:1:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_0_by_1",
+                      "typeString": "int_const 0"
+                    },
+                    "value": "0"
+                  },
+                  "functionReturnParameters": 3178,
+                  "id": 3180,
+                  "nodeType": "Return",
+                  "src": "2455:8:4"
+                }
+              ]
+            },
+            "functionSelector": "aaccd230",
+            "id": 3182,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "quoteDispatch",
+            "nameLocation": "2276:13:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3175,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2377:8:4"
+            },
+            "parameters": {
+              "id": 3174,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3171,
+                  "mutability": "mutable",
+                  "name": "_metadata",
+                  "nameLocation": "2314:9:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3182,
+                  "src": "2299:24:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3170,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2299:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3173,
+                  "mutability": "mutable",
+                  "name": "_message",
+                  "nameLocation": "2348:8:4",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3182,
+                  "src": "2333:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3172,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2333:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2289:73:4"
+            },
+            "returnParameters": {
+              "id": 3178,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3177,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3182,
+                  "src": "2395:7:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3176,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2395:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2394:9:4"
+            },
+            "scope": 3205,
+            "src": "2267:203:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              3130
+            ],
+            "body": {
+              "id": 3191,
+              "nodeType": "Block",
+              "src": "2573:25:4",
+              "statements": [
+                {
+                  "expression": {
+                    "hexValue": "30",
+                    "id": 3189,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2590:1:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_0_by_1",
+                      "typeString": "int_const 0"
+                    },
+                    "value": "0"
+                  },
+                  "functionReturnParameters": 3188,
+                  "id": 3190,
+                  "nodeType": "Return",
+                  "src": "2583:8:4"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3183,
+              "nodeType": "StructuredDocumentation",
+              "src": "2476:33:4",
+              "text": "@inheritdoc IPostDispatchHook"
+            },
+            "functionSelector": "e445e7dd",
+            "id": 3192,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hookType",
+            "nameLocation": "2523:8:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3185,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2548:8:4"
+            },
+            "parameters": {
+              "id": 3184,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2531:2:4"
+            },
+            "returnParameters": {
+              "id": 3188,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3187,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3192,
+                  "src": "2566:5:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 3186,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2566:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2565:7:4"
+            },
+            "scope": 3205,
+            "src": "2514:84:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              3138
+            ],
+            "body": {
+              "id": 3203,
+              "nodeType": "Block",
+              "src": "2750:63:4",
+              "statements": [
+                {
+                  "expression": {
+                    "hexValue": "74727565",
+                    "id": 3201,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2767:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 3200,
+                  "id": 3202,
+                  "nodeType": "Return",
+                  "src": "2760:11:4"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3193,
+              "nodeType": "StructuredDocumentation",
+              "src": "2604:33:4",
+              "text": "@inheritdoc IPostDispatchHook"
+            },
+            "functionSelector": "e5320bb9",
+            "id": 3204,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsMetadata",
+            "nameLocation": "2651:16:4",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3197,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2726:8:4"
+            },
+            "parameters": {
+              "id": 3196,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3195,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3204,
+                  "src": "2677:14:4",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3194,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2677:5:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2667:44:4"
+            },
+            "returnParameters": {
+              "id": 3200,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3199,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3204,
+                  "src": "2744:4:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3198,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2744:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2743:6:4"
+            },
+            "scope": 3205,
+            "src": "2642:171:4",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3206,
+        "src": "2054:761:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "39:2778:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.6+commit.0e36fba0.mod.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2025-08-13T19:43:03.582Z"
+}
