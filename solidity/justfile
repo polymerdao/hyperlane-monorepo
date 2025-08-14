@@ -1,4 +1,5 @@
 ADDRESS_PATH := "./devnet-addresses.json"
+TRON_DEPLOYMENTS_PATH := "./tron-deployment"
 
 chain-id RPC_URL:
   @echo "$(cast chain-id -r {{RPC_URL}})"
@@ -99,15 +100,12 @@ deploy-simple-app RPC_URL ORIGIN_CHAIN_ID ADDRESS_PATH="./devnet-addresses.json"
     just save-contract-address "{{RPC_URL}}" "SimpleMessageSenderReceiver_{{ORIGIN_CHAIN_ID}}" "SimpleMessageSenderReceiver" "SimpleMessageSenderReceiver" "{{ADDRESS_PATH}}"
 
 save-contract-address RPC_URL CONTRACT_NAME DEPLOY_FILE_NAME CONTRACT_PATTERN ADDRESS_PATH="./devnet-addresses.json":
-    export CONTRACT_ADDRESS=$(just _get-latest-address {{DEPLOY_FILE_NAME}} {{CONTRACT_PATTERN}}) && \
+    export CONTRACT_ADDRESS=$(just _get-latest-address {{DEPLOY_FILE_NAME}} "{{CONTRACT_PATTERN}}") && \
     export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
     jq --arg address "$CONTRACT_ADDRESS" \
        --arg chain_id "$CHAIN_ID" \
        --arg contract_name "{{CONTRACT_NAME}}" \
        '.[$chain_id] |= ( . + {($contract_name): $address} )' "{{ADDRESS_PATH}}" > "{{ADDRESS_PATH}}.tmp" && mv "{{ADDRESS_PATH}}.tmp" "{{ADDRESS_PATH}}"
-
-
-
 
 get-contract CHAIN_ID CONTRACT_NAME ADDRESS_PATH="./devnet-addresses.json":
     @cat "{{ADDRESS_PATH}}" | jq -r --arg chain_id "{{CHAIN_ID}}" '.[$chain_id].{{CONTRACT_NAME}}'
@@ -122,6 +120,53 @@ default-ism RPC_URL ADDRESS_PATH="./devnet-addresses.json":
         just get-contract $CHAIN_ID "PolymerISM_25327" "{{ADDRESS_PATH}}"; \
     fi
 
+
+# TRON DEPLOYMENTS
+tron-build:
+    cd "{{TRON_DEPLOYMENTS_PATH}}" && just build-contract
+
+# Deploy mailbox on TRON (migrations 1-2) and save addresses
+tron-deploy-mailbox RPC_URL ADDRESS_PATH="./addresses/devnet-addresses.json":
+    echo "Using deployer account $(cast wallet address $PRIVATE_KEY)"
+    export HYPERLANE_DOMAIN_ID=$(just chain-id "{{RPC_URL}}"/jsonrpc) && \
+    cd "{{TRON_DEPLOYMENTS_PATH}}" && RPC_URL="{{RPC_URL}}" npx tronbox migrate --network dynamic --to 2 | tee /tmp/deploy-tron-mailbox.txt
+    just save-contract-address "{{RPC_URL}}"/jsonrpc "Mailbox" "tron-mailbox" "Mailbox Proxy Address: 41[a-fA-F0-9]*" "{{ADDRESS_PATH}}"
+
+# Deploy PolymerISM on TRON and save address
+tron-deploy-polymerism PROVER_ADDRESS ORIGIN_MAILBOX_ADDRESS RPC_URL ADDRESS_PATH="./addresses/devnet-addresses.json":
+    POLYMER_PROVER_ADDRESS="${POLYMER_PROVER_ADDRESS:? polymer prover address must be set in the environment}" 
+    echo "Using deployer account $(cast wallet address $PRIVATE_KEY)"
+    cd "{{TRON_DEPLOYMENTS_PATH}}" && RPC_URL="{{RPC_URL}}" POLYMER_PROVER_ADDRESS={{PROVER_ADDRESS}} ORIGIN_CHAIN_MAILBOX_ADDRESS={{ORIGIN_MAILBOX_ADDRESS}} npx tronbox migrate --network dynamic -f 3 --to 3 | tee /tmp/deploy-tron-polymerism.txt
+    just save-contract-address "{{RPC_URL}}"/jsonrpc "PolymerISM" "tron-polymerism" "PolymerISM deployed at: 41[a-fA-F0-9]*" "{{ADDRESS_PATH}}"
+
+# Deploy SimpleMessageSenderReceiver on TRON and save address
+tron-deploy-simplesender-receiver MAILBOX_ADDRESS ISM_ADDRESS RPC_URL ADDRESS_PATH="./addresses/devnet-addresses.json":
+    echo "Using deployer account $(cast wallet address $PRIVATE_KEY)"
+    cd "{{TRON_DEPLOYMENTS_PATH}}" && RPC_URL="{{RPC_URL}}" MAILBOX_PROXY_ADDRESS={{MAILBOX_ADDRESS}} POLYMER_ISM_ADDRESS={{ISM_ADDRESS}} npx tronbox migrate --network dynamic -f 4 --to 4 | tee /tmp/deploy-tron-simplesender.txt
+    just save-contract-address "{{RPC_URL}}"/jsonrpc "SimpleMessageSenderReceiver" "tron-simplesender" "SimpleMessageSenderReceiver deployed at: 41[a-fA-F0-9]*" "{{ADDRESS_PATH}}"
+
+# Deploy new TRON spoke chain (full deployment sequence)
+deploy-new-tron-spoke-chain PROVER_ADDRESS HUB_MAILBOX_ADDRESS RPC_URL ADDRESS_PATH="./addresses/devnet-addresses.json":
+    echo "Deploying new TRON spoke chain..."
+    export TRON_DOMAIN_ID=$(just chain-id "{{RPC_URL}}"/jsonrpc) && \
+    echo "TRON Domain ID: $TRON_DOMAIN_ID" && \
+    echo "Step 1: Building TRON contracts..." && \
+    just tron-build && \
+    echo "Step 2: Deploying mailbox on TRON..." && \
+    just tron-deploy-mailbox "{{RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 3: Deploying PolymerISM on TRON..." && \
+    export TRON_MAILBOX=$(just get-contract $TRON_DOMAIN_ID Mailbox "{{ADDRESS_PATH}}") && \
+    just tron-deploy-polymerism "{{PROVER_ADDRESS}}" "{{HUB_MAILBOX_ADDRESS}}" "{{RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 4: Deploying SimpleMessageSenderReceiver on TRON..." && \
+    export TRON_ISM=$(just get-contract $TRON_DOMAIN_ID PolymerISM "{{ADDRESS_PATH}}") && \
+    just tron-deploy-simplesender-receiver $TRON_MAILBOX $TRON_ISM "{{RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "TRON spoke chain deployment complete!"
+
+# INTERNAL METHODS
 _get-latest-address DEPLOY_FILE_NAME CONTRACT_PATTERN:
-    @grep -o "new {{CONTRACT_PATTERN}}@0x[a-fA-F0-9]*" /tmp/deploy-{{DEPLOY_FILE_NAME}}.txt | head -1 | cut -d'@' -f2 || echo "No {{CONTRACT_PATTERN}} address found. Run deploy-{{CONTRACT_PATTERN}} first."
+    @if [[ "{{DEPLOY_FILE_NAME}}" == tron-* ]]; then \
+        @grep -o "{{CONTRACT_PATTERN}}" /tmp/deploy-{{DEPLOY_FILE_NAME}}.txt | cut -d' ' -f4 | head -1 || echo "No {{CONTRACT_PATTERN}} address found. Run deploy-{{CONTRACT_PATTERN}} first."; \
+    else \
+        @grep -o "new {{CONTRACT_PATTERN}}@0x[a-fA-F0-9]*" /tmp/deploy-{{DEPLOY_FILE_NAME}}.txt | head -1 | cut -d'@' -f2 || echo "No {{CONTRACT_PATTERN}} address found. Run deploy-{{CONTRACT_PATTERN}} first."
+    fi
 
