@@ -1,47 +1,45 @@
 module.exports = {
   networks: {
+    // Dynamic network configuration using environment variables
+    // Use RPC_URL and PRIVATE_KEY environment variables
+    // Example: RPC_URL=https://api.trongrid.io PRIVATE_KEY=your_key tronbox migrate --network dynamic
+    dynamic: {
+      privateKey: process.env.PRIVATE_KEY,
+      userFeePercentage: 100,
+      feeLimit: 1000 * 1e6,
+      fullHost: process.env.RPC_URL || 'https://nile.trongrid.io',
+      network_id: '*', // Match any network id
+    },
+    // Legacy network configurations (kept for backwards compatibility)
     mainnet: {
-      // Don't put your private key here:
-      privateKey: process.env.PRIVATE_KEY_MAINNET,
-      /**
-       * Create a .env file (it must be gitignored) containing something like
-       *
-       *   export PRIVATE_KEY_MAINNET=4E7FEC...656243
-       *
-       * Then, run the migration with:
-       *
-       *   source .env && tronbox migrate --network mainnet
-       */
+      privateKey: process.env.PRIVATE_KEY_MAINNET || process.env.PRIVATE_KEY,
       userFeePercentage: 100,
       feeLimit: 1000 * 1e6,
       fullHost: 'https://api.trongrid.io',
-      network_id: '1'
+      network_id: '1',
     },
     shasta: {
-      // Obtain test coin at https://shasta.tronex.io/
-      privateKey: process.env.PRIVATE_KEY_SHASTA,
+      privateKey: process.env.PRIVATE_KEY_SHASTA || process.env.PRIVATE_KEY,
       userFeePercentage: 50,
       feeLimit: 1000 * 1e6,
       fullHost: 'https://api.shasta.trongrid.io',
-      network_id: '2'
+      network_id: '2',
     },
     nile: {
-      // Obtain test coin at https://nileex.io/join/getJoinPage
-      privateKey: process.env.PRIVATE_KEY_NILE,
+      privateKey: process.env.PRIVATE_KEY_NILE || process.env.PRIVATE_KEY,
       userFeePercentage: 100,
       feeLimit: 1000 * 1e6,
       fullHost: 'https://nile.trongrid.io',
-      network_id: '3'
+      network_id: '3',
     },
     development: {
-      // For tronbox/tre docker image
-      // See https://hub.docker.com/r/tronbox/tre
-      privateKey: '0000000000000000000000000000000000000000000000000000000000000001',
+      privateKey:
+        '0000000000000000000000000000000000000000000000000000000000000001',
       userFeePercentage: 0,
       feeLimit: 1000 * 1e6,
       fullHost: 'http://127.0.0.1:9090',
-      network_id: '9'
-    }
+      network_id: '9',
+    },
   },
   compilers: {
     solc: {
@@ -51,11 +49,11 @@ module.exports = {
       settings: {
         optimizer: {
           enabled: true,
-          runs: 200
+          runs: 200,
         },
         // evmVersion: 'istanbul',
         // viaIR: true,
-      }
-    }
-  }
+      },
+    },
+  },
 };
