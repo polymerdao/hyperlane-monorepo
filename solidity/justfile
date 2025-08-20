@@ -16,11 +16,7 @@ deploy-mailbox RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     just save-contract-address "{{RPC_URL}}" "Mailbox" "Mailbox" "ERC1967Proxy" "{{ADDRESS_PATH}}"
 
 # Should only really be needed for the hub chain and run once per environment. 
-deploy-routing-ism ORIGIN_CHAIN_ID RPC_URL ADDRESS_PATH="./devnet-addresses.json":
-    export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
-    export REMOTE_ORIGIN_DOMAIN_ID="{{ ORIGIN_CHAIN_ID }}" && \
-    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS=$(just get-contract $CHAIN_ID "PolymerISM_{{ ORIGIN_CHAIN_ID }}" "{{ADDRESS_PATH}}") && \
-    echo "Using PolymerISM at: $POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS" && \
+deploy-routing-ism RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     forge script script/DeployDomainRoutingIsm.s.sol:DeployDomainRoutingIsm \
         --rpc-url "{{RPC_URL}}" \
         --broadcast \
@@ -51,7 +47,6 @@ configure-routing-ism ORIGIN_CHAIN_ID RPC_URL ADDRESS_PATH="./devnet-addresses.j
         --broadcast \
         -vvvv
 
-
 deploy-new-spoke-chain SPOKE_RPC_URL HUB_RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     echo "Deploying new spoke chain..."
     export SPOKE_CHAIN_ID=$(just chain-id "{{SPOKE_RPC_URL}}") && \
@@ -67,10 +62,32 @@ deploy-new-spoke-chain SPOKE_RPC_URL HUB_RPC_URL ADDRESS_PATH="./devnet-addresse
     just deploy-simple-app "{{SPOKE_RPC_URL}}" $HUB_CHAIN_ID "{{ADDRESS_PATH}}" && \
     echo "Spoke chain deployment complete!"
 
+# Deploy new hub chain typically implies that you will also need to deploy at least one other spoke chain
+deploy-new-hub-chain HUB_RPC_URL SPOKE_RPC_URL ADDRESS_PATH="./devnet-addresses.json":
+    echo "Deploying new hub chain..."
+    export HUB_CHAIN_ID=$(just chain-id "{{HUB_RPC_URL}}") && \
+    export SPOKE_CHAIN_ID=$(just chain-id "{{SPOKE_RPC_URL}}") && \
+    echo "Hub Chain ID: $HUB_CHAIN_ID, Spoke Chain ID: $SPOKE_CHAIN_ID" && \
+    echo "Step 1: Deploying DomainRoutingISM on hub chain..." && \
+    just deploy-routing-ism "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 2: Deploying mailbox on hub chain..." && \
+    just deploy-mailbox "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 3: Deploying PolymerISM on spoke chain with hub as origin..." && \
+    just deploy-polymerism $HUB_CHAIN_ID "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 4: Deploying mailbox on spoke chain..." && \
+    just deploy-mailbox "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 5: Deploying PolymerISM on hub chain with spoke as origin..." && \
+    just deploy-polymerism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 5: Configuring DomainRoutingISM to use PolymerISM for spoke chain..." && \
+    just configure-routing-ism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 5: Deploying simple app on hub chain..." && \
+    just deploy-simple-app "{{HUB_RPC_URL}}" $SPOKE_CHAIN_ID "{{ADDRESS_PATH}}" && \
+    echo "Hub chain deployment complete!"
+
 deploy-simple-app RPC_URL ORIGIN_CHAIN_ID ADDRESS_PATH="./devnet-addresses.json":
     export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
     export MAILBOX_ADDRESS=$(just get-contract $CHAIN_ID Mailbox "{{ADDRESS_PATH}}") && \
-    export ISM_ADDRESS=$(just get-contract $CHAIN_ID PolymerISM_{{ORIGIN_CHAIN_ID}} "{{ADDRESS_PATH}}") && \
+    export ISM_ADDRESS=$(just default-ism "{{RPC_URL}}" "{{ADDRESS_PATH}}") && \
     forge script script/DeploySimpleMessageSenderReceiver.s.sol:DeploySimpleMessageSenderReceiver \
         --rpc-url "{{RPC_URL}}" \
         --broadcast \
@@ -94,8 +111,10 @@ get-contract CHAIN_ID CONTRACT_NAME ADDRESS_PATH="./devnet-addresses.json":
 
 default-ism RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     @export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
-    if [ "$CHAIN_ID" = "25327" ]; then \
+    if [ "$CHAIN_ID" = "25327" ] || [ "$CHAIN_ID" = "84532" ]; then \
         just get-contract $CHAIN_ID "DomainRoutingIsm" "{{ADDRESS_PATH}}"; \
+    elif [ "$CHAIN_ID" = "11155111" ] || [ "$CHAIN_ID" = "3448148188" ]; then \
+        just get-contract $CHAIN_ID "PolymerISM_84532" "{{ADDRESS_PATH}}"; \
     else \
         just get-contract $CHAIN_ID "PolymerISM_25327" "{{ADDRESS_PATH}}"; \
     fi
