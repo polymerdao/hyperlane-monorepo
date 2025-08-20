@@ -4,7 +4,6 @@ pragma solidity ^0.8.19;
 import "forge-std/Script.sol";
 import {ERC1967Proxy} from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 import {Mailbox} from "../contracts/Mailbox.sol";
-import {RevertingISM} from "../contracts/mock/RevertingISM.sol";
 import {MockHook} from "../contracts/mock/MockHook.sol";
 import {IInterchainSecurityModule} from "../contracts/interfaces/IInterchainSecurityModule.sol";
 import {IPostDispatchHook} from "../contracts/interfaces/hooks/IPostDispatchHook.sol";
@@ -14,6 +13,7 @@ contract DeployMailbox is Script {
         uint32 hyperlaneDomainId = uint32(vm.envUint("HYPERLANE_DOMAIN_ID"));
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         address deployerAddress = vm.addr(deployerPrivateKey);
+        address defaultIsm = vm.envAddress("DEFAULT_ISM");
 
         // Use deployer as the initial owner for simplicity
         address owner = deployerAddress;
@@ -21,9 +21,7 @@ contract DeployMailbox is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // --- 1. Deploy Mock Dependencies ---
-        console.log("Deploying RevertingISM...");
-        RevertingISM revertingIsm = new RevertingISM();
-        console.log("RevertingISM deployed at:", address(revertingIsm));
+        console.log("Using Default ISM at:", defaultIsm);
 
         console.log("Deploying MockHook (for default)...");
         MockHook mockDefaultHook = new MockHook();
@@ -49,7 +47,7 @@ contract DeployMailbox is Script {
         bytes memory initData = abi.encodeWithSelector(
             Mailbox.initialize.selector,
             owner, // _owner
-            address(revertingIsm), // _defaultIsm
+            defaultIsm, // _defaultIsm
             address(mockDefaultHook), // _defaultHook
             address(mockRequiredHook) // _requiredHook
         );
@@ -69,7 +67,7 @@ contract DeployMailbox is Script {
         console.log("Deployment Summary:");
         console.log("  Target Chain Hyperlane Domain ID:", hyperlaneDomainId);
         console.log("  Deployer/Owner:", owner);
-        console.log("  RevertingISM Address:", address(revertingIsm));
+        console.log("  Default ISM Address:", defaultIsm);
         console.log("  Mock Default Hook Address:", address(mockDefaultHook));
         console.log("  Mock Required Hook Address:", address(mockRequiredHook));
         console.log(
