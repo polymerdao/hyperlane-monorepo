@@ -15,17 +15,17 @@ deploy-mailbox RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     just save-contract-address "{{RPC_URL}}" "Mailbox" "Mailbox" "ERC1967Proxy" "{{ADDRESS_PATH}}"
 
 # Should only really be needed for the hub chain and run once per environment. 
-deploy-routing-ism ORIGIN_CHAIN_ID RPC_URL:
+deploy-routing-ism ORIGIN_CHAIN_ID RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
-    export LOCAL_MAILBOX_ADDRESS=$(just get-contract $CHAIN_ID Mailbox) && \
     export REMOTE_ORIGIN_DOMAIN_ID="{{ ORIGIN_CHAIN_ID }}" && \
-    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS=$(just get-contract $CHAIN_ID PolymerISM) && \
-    forge script script/DeployDefaultFallbackRoutingIsm.s.sol:DeployDefaultFallbackRoutingIsm \
+    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS=$(just get-contract $CHAIN_ID "PolymerISM_{{ ORIGIN_CHAIN_ID }}" "{{ADDRESS_PATH}}") && \
+    echo "Using PolymerISM at: $POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS" && \
+    forge script script/DeployDomainRoutingIsm.s.sol:DeployDomainRoutingIsm \
         --rpc-url "{{RPC_URL}}" \
         --broadcast \
-        -vvvv | tee /tmp/deploy-DefaultFallbackRoutingIsm.txt && \
-    echo "DefaultFallbackRoutingIsm deployed at: $(grep -o 'new DefaultFallbackRoutingIsm@0x[a-fA-F0-9]*' /tmp/deploy-DefaultFallbackRoutingIsm.txt | cut -d'@' -f2)"
-    just save-contract-address "{{RPC_URL}}" DefaultFallbackRoutingIsm
+        -vvvv | tee /tmp/deploy-DomainRoutingIsm.txt && \
+    echo "DomainRoutingIsm deployed at: $(grep -o 'new DomainRoutingIsm@0x[a-fA-F0-9]*' /tmp/deploy-DomainRoutingIsm.txt | cut -d'@' -f2)"
+    just save-contract-address "{{RPC_URL}}" "DomainRoutingIsm" "DomainRoutingIsm" "DomainRoutingIsm" "{{ADDRESS_PATH}}"
 
 deploy-polymerism ORIGIN_CHAIN_ID RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     POLYMER_PROVER_ADDRESS="${POLYMER_PROVER_ADDRESS:? polymer prover address must be set in the environment}" 
