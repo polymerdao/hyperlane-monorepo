@@ -82,7 +82,10 @@ deploy-new-hub-chain HUB_RPC_URL SPOKE_RPC_URL ADDRESS_PATH="./devnet-addresses.
     just configure-routing-ism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
     echo "Step 5: Deploying simple app on hub chain..." && \
     just deploy-simple-app "{{HUB_RPC_URL}}" $SPOKE_CHAIN_ID "{{ADDRESS_PATH}}" && \
-    echo "Hub chain deployment complete!"
+    echo "Hub chain deployment complete!" && \
+    echo "Step 6: Deploying simple app on spoke chain..." && \
+    just deploy-simple-app "{{SPOKE_RPC_URL}}" $HUB_CHAIN_ID "{{ADDRESS_PATH}}" && \
+    echo "Spoke chain deployment complete!"
 
 deploy-simple-app RPC_URL ORIGIN_CHAIN_ID ADDRESS_PATH="./devnet-addresses.json":
     export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
