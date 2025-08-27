@@ -7,6 +7,7 @@ chain-id RPC_URL:
 deploy-mailbox RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     echo "Using deployer account $(cast wallet address $PRIVATE_KEY)"
     export HYPERLANE_DOMAIN_ID=$(just chain-id "{{RPC_URL}}") && \
+    export DEFAULT_ISM=$(just default-ism "{{RPC_URL}}" "{{ADDRESS_PATH}}") && \
     forge script script/DeployMailbox.s.sol:DeployMailbox \
         --rpc-url "{{RPC_URL}}" \
         --broadcast \
@@ -15,17 +16,13 @@ deploy-mailbox RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     just save-contract-address "{{RPC_URL}}" "Mailbox" "Mailbox" "ERC1967Proxy" "{{ADDRESS_PATH}}"
 
 # Should only really be needed for the hub chain and run once per environment. 
-deploy-routing-ism ORIGIN_CHAIN_ID RPC_URL:
-    export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
-    export LOCAL_MAILBOX_ADDRESS=$(just get-contract $CHAIN_ID Mailbox) && \
-    export REMOTE_ORIGIN_DOMAIN_ID="{{ ORIGIN_CHAIN_ID }}" && \
-    export POLYMER_ISM_FOR_REMOTE_ORIGIN_ADDRESS=$(just get-contract $CHAIN_ID PolymerISM) && \
-    forge script script/DeployDefaultFallbackRoutingIsm.s.sol:DeployDefaultFallbackRoutingIsm \
+deploy-routing-ism RPC_URL ADDRESS_PATH="./devnet-addresses.json":
+    forge script script/DeployDomainRoutingIsm.s.sol:DeployDomainRoutingIsm \
         --rpc-url "{{RPC_URL}}" \
         --broadcast \
-        -vvvv | tee /tmp/deploy-DefaultFallbackRoutingIsm.txt && \
-    echo "DefaultFallbackRoutingIsm deployed at: $(grep -o 'new DefaultFallbackRoutingIsm@0x[a-fA-F0-9]*' /tmp/deploy-DefaultFallbackRoutingIsm.txt | cut -d'@' -f2)"
-    just save-contract-address "{{RPC_URL}}" DefaultFallbackRoutingIsm
+        -vvvv | tee /tmp/deploy-DomainRoutingIsm.txt && \
+    echo "DomainRoutingIsm deployed at: $(grep -o 'new DomainRoutingIsm@0x[a-fA-F0-9]*' /tmp/deploy-DomainRoutingIsm.txt | cut -d'@' -f2)"
+    just save-contract-address "{{RPC_URL}}" "DomainRoutingIsm" "DomainRoutingIsm" "DomainRoutingIsm" "{{ADDRESS_PATH}}"
 
 deploy-polymerism ORIGIN_CHAIN_ID RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     POLYMER_PROVER_ADDRESS="${POLYMER_PROVER_ADDRESS:? polymer prover address must be set in the environment}" 
@@ -38,6 +35,17 @@ deploy-polymerism ORIGIN_CHAIN_ID RPC_URL ADDRESS_PATH="./devnet-addresses.json"
         -vvvv | tee /tmp/deploy-PolymerISM.txt && \
     echo "Polymerism deployed at: $(grep -o 'new PolymerISM@0x[a-fA-F0-9]*' /tmp/deploy-PolymerISM.txt | cut -d'@' -f2)"
     just save-contract-address "{{RPC_URL}}" "PolymerISM_{{ORIGIN_CHAIN_ID}}" "PolymerISM" "PolymerISM" "{{ADDRESS_PATH}}"
+
+configure-routing-ism ORIGIN_CHAIN_ID RPC_URL ADDRESS_PATH="./devnet-addresses.json":
+    export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
+    export ORIGIN_DOMAIN={{ORIGIN_CHAIN_ID}} && \
+    export DOMAIN_ROUTING_ISM_ADDRESS=$(just get-contract $CHAIN_ID "DomainRoutingIsm" "{{ADDRESS_PATH}}") && \
+    export ISM_ADDRESS=$(just get-contract $CHAIN_ID "PolymerISM_{{ORIGIN_CHAIN_ID}}" "{{ADDRESS_PATH}}") && \
+    echo "Configuring DomainRoutingIsm at: $DOMAIN_ROUTING_ISM_ADDRESS for origin $ORIGIN_DOMAIN with ISM: $ISM_ADDRESS" && \
+    forge script script/configureDomainRoutingIsm.s.sol:ConfigureDomainRoutingIsm \
+        --rpc-url "{{RPC_URL}}" \
+        --broadcast \
+        -vvvv
 
 deploy-new-spoke-chain SPOKE_RPC_URL HUB_RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     echo "Deploying new spoke chain..."
@@ -54,10 +62,35 @@ deploy-new-spoke-chain SPOKE_RPC_URL HUB_RPC_URL ADDRESS_PATH="./devnet-addresse
     just deploy-simple-app "{{SPOKE_RPC_URL}}" $HUB_CHAIN_ID "{{ADDRESS_PATH}}" && \
     echo "Spoke chain deployment complete!"
 
+# Deploy new hub chain typically implies that you will also need to deploy at least one other spoke chain
+deploy-new-hub-chain HUB_RPC_URL SPOKE_RPC_URL ADDRESS_PATH="./devnet-addresses.json":
+    echo "Deploying new hub chain..."
+    export HUB_CHAIN_ID=$(just chain-id "{{HUB_RPC_URL}}") && \
+    export SPOKE_CHAIN_ID=$(just chain-id "{{SPOKE_RPC_URL}}") && \
+    echo "Hub Chain ID: $HUB_CHAIN_ID, Spoke Chain ID: $SPOKE_CHAIN_ID" && \
+    echo "Step 1: Deploying DomainRoutingISM on hub chain..." && \
+    just deploy-routing-ism "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 2: Deploying mailbox on hub chain..." && \
+    just deploy-mailbox "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 3: Deploying PolymerISM on spoke chain with hub as origin..." && \
+    just deploy-polymerism $HUB_CHAIN_ID "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 4: Deploying mailbox on spoke chain..." && \
+    just deploy-mailbox "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 5: Deploying PolymerISM on hub chain with spoke as origin..." && \
+    just deploy-polymerism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 5: Configuring DomainRoutingISM to use PolymerISM for spoke chain..." && \
+    just configure-routing-ism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 5: Deploying simple app on hub chain..." && \
+    just deploy-simple-app "{{HUB_RPC_URL}}" $SPOKE_CHAIN_ID "{{ADDRESS_PATH}}" && \
+    echo "Hub chain deployment complete!" && \
+    echo "Step 6: Deploying simple app on spoke chain..." && \
+    just deploy-simple-app "{{SPOKE_RPC_URL}}" $HUB_CHAIN_ID "{{ADDRESS_PATH}}" && \
+    echo "Spoke chain deployment complete!"
+
 deploy-simple-app RPC_URL ORIGIN_CHAIN_ID ADDRESS_PATH="./devnet-addresses.json":
     export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
     export MAILBOX_ADDRESS=$(just get-contract $CHAIN_ID Mailbox "{{ADDRESS_PATH}}") && \
-    export ISM_ADDRESS=$(just get-contract $CHAIN_ID PolymerISM_{{ORIGIN_CHAIN_ID}} "{{ADDRESS_PATH}}") && \
+    export ISM_ADDRESS=$(just default-ism "{{RPC_URL}}" "{{ADDRESS_PATH}}") && \
     forge script script/DeploySimpleMessageSenderReceiver.s.sol:DeploySimpleMessageSenderReceiver \
         --rpc-url "{{RPC_URL}}" \
         --broadcast \
@@ -78,6 +111,16 @@ save-contract-address RPC_URL CONTRACT_NAME DEPLOY_FILE_NAME CONTRACT_PATTERN AD
 
 get-contract CHAIN_ID CONTRACT_NAME ADDRESS_PATH="./devnet-addresses.json":
     @cat "{{ADDRESS_PATH}}" | jq -r --arg chain_id "{{CHAIN_ID}}" '.[$chain_id].{{CONTRACT_NAME}}'
+
+default-ism RPC_URL ADDRESS_PATH="./devnet-addresses.json":
+    @export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
+    if [ "$CHAIN_ID" = "25327" ] || [ "$CHAIN_ID" = "84532" ]; then \
+        just get-contract $CHAIN_ID "DomainRoutingIsm" "{{ADDRESS_PATH}}"; \
+    elif [ "$CHAIN_ID" = "11155111" ] || [ "$CHAIN_ID" = "3448148188" ]; then \
+        just get-contract $CHAIN_ID "PolymerISM_84532" "{{ADDRESS_PATH}}"; \
+    else \
+        just get-contract $CHAIN_ID "PolymerISM_25327" "{{ADDRESS_PATH}}"; \
+    fi
 
 _get-latest-address DEPLOY_FILE_NAME CONTRACT_PATTERN:
     @grep -o "new {{CONTRACT_PATTERN}}@0x[a-fA-F0-9]*" /tmp/deploy-{{DEPLOY_FILE_NAME}}.txt | head -1 | cut -d'@' -f2 || echo "No {{CONTRACT_PATTERN}} address found. Run deploy-{{CONTRACT_PATTERN}} first."
