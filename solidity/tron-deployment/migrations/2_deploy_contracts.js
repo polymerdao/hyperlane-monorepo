@@ -4,6 +4,11 @@ const MockHook = artifacts.require('MockHook');
 const ERC1967Proxy = artifacts.require('ERC1967Proxy');
 const PolymerISM = artifacts.require('PolymerIsm');
 
+// Helper function to add delays between RPC calls
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 module.exports = async function (deployer, network, account) {
   const deployerAddress = account;
 
@@ -12,6 +17,9 @@ module.exports = async function (deployer, network, account) {
     ? parseInt(process.env.HYPERLANE_DOMAIN_ID)
     : 728126428; // Default Tron Mainnet Domain ID
   const owner = deployerAddress; // Use deployer as the initial owner for simplicity
+
+  // Default ISM address from environment
+  const defaultIsm = process.env.DEFAULT_ISM || null;
 
   // PolymerISM configuration - for receiving messages from other chains
   const polymerProverAddress = process.env.POLYMER_PROVER_ADDRESS || null;
@@ -42,28 +50,37 @@ module.exports = async function (deployer, network, account) {
 
   console.log('Hyperlane Domain ID:', hyperlaneDomainId);
   console.log('Owner Address:', owner);
+  if (defaultIsm) {
+    console.log('Default ISM Address:', defaultIsm);
+  }
   console.log('='.repeat(50));
 
   try {
-    // --- Step 1: Deploy Mock Dependencies ---
-    console.log('\n🚀 Step 1: Deploying Mock Dependencies...');
+    // --- 1. Deploy Mock Dependencies ---
+    let mockIsm = null;
+    if (defaultIsm) {
+      console.log('Using provided Default ISM at:', defaultIsm);
+    } else {
+      console.log('Deploying MockISM as Default ISM...');
+      await deployer.deploy(MockISM);
+      mockIsm = await MockISM.deployed();
+      console.log('✅ MockISM deployed at:', mockIsm.address);
+      await sleep(10000); // Wait 10 seconds
+    }
 
-    console.log('Deploying MockISM...');
-    await deployer.deploy(MockISM);
-    const mockIsm = await MockISM.deployed();
-    console.log('✅ MockISM deployed at:', mockIsm.address);
-
-    console.log('Deploying MockHook...');
+    console.log('Deploying MockHook (for default)...');
     await deployer.deploy(MockHook);
-    const mockHook = await MockHook.deployed();
-    console.log('✅ MockHook deployed at:', mockHook.address);
+    const mockDefaultHook = await MockHook.deployed();
+    console.log('✅ Mock Default Hook deployed at:', mockDefaultHook.address);
+    await sleep(10000); // Wait 10 seconds
 
-    // Use the same MockHook instance for both default and required hooks
-    const mockDefaultHook = mockHook;
-    const mockRequiredHook = mockHook;
-    console.log('✅ Using same MockHook for both default and required hooks');
+    console.log('Deploying MockHook (for required)...');
+    await deployer.deploy(MockHook);
+    const mockRequiredHook = await MockHook.deployed();
+    console.log('✅ Mock Required Hook deployed at:', mockRequiredHook.address);
+    await sleep(10000); // Wait 10 seconds
 
-    // --- Step 2: Deploy Mailbox Implementation ---
+    // --- 2. Deploy Mailbox Implementation ---
     console.log('\n🚀 Step 2: Deploying Mailbox Implementation...');
     console.log(
       'Deploying Mailbox implementation with domain ID:',
@@ -75,19 +92,24 @@ module.exports = async function (deployer, network, account) {
       '✅ Mailbox implementation deployed at:',
       mailboxImplementation.address,
     );
+    await sleep(10000); // Wait 10 seconds
 
-    // --- Step 3: Prepare Initialization Data ---
+    // --- 3. Prepare Initialization Data ---
     console.log('\n🚀 Step 3: Preparing Initialization Data...');
 
-    // For now, let's deploy the proxy without initialization data
-    // and initialize it separately
+    const defaultIsmAddress = defaultIsm || mockIsm.address;
+
+    console.log('Preparing initialization data with:');
+    console.log('  Owner:', owner);
+    console.log('  Default ISM:', defaultIsmAddress);
+    console.log('  Default Hook:', mockDefaultHook.address);
+    console.log('  Required Hook:', mockRequiredHook.address);
+
+    // Create initialization data manually - use empty data and initialize separately
+    // This follows TronBox best practices for proxy deployment
     const encodedInitData = '0x';
 
-    console.log(
-      'Deploying proxy without initialization (will initialize separately)...',
-    );
-
-    // --- Step 4: Deploy ERC1967Proxy ---
+    // --- 4. Deploy ERC1967Proxy ---
     console.log('\n🚀 Step 4: Deploying ERC1967Proxy for Mailbox...');
     await deployer.deploy(
       ERC1967Proxy,
@@ -96,34 +118,29 @@ module.exports = async function (deployer, network, account) {
     );
     const mailboxProxy = await ERC1967Proxy.deployed();
     console.log('✅ Mailbox Proxy deployed at:', mailboxProxy.address);
+    await sleep(10000); // Wait 10 seconds
 
-    // --- Step 5: Initialize the Mailbox through Proxy ---
+    // --- 5. Initialize Mailbox through Proxy ---
     console.log('\n🚀 Step 5: Initializing Mailbox through Proxy...');
 
     // Create a Mailbox instance pointing to the proxy address for interaction
     const mailboxInstance = await Mailbox.at(mailboxProxy.address);
 
-    try {
-      // Initialize the mailbox
-      console.log('Calling initialize function...');
-      await mailboxInstance.initialize(
-        owner,
-        mockIsm.address,
-        mockDefaultHook.address,
-        mockRequiredHook.address,
-      );
-      console.log('✅ Mailbox initialized successfully');
-    } catch (error) {
-      console.log(
-        '⚠️  Initialize failed (might already be initialized):',
-        error.message,
-      );
-    }
+    // Initialize the mailbox
+    console.log('Calling initialize function...');
+    await mailboxInstance.initialize(
+      owner,
+      defaultIsmAddress,
+      mockDefaultHook.address,
+      mockRequiredHook.address,
+    );
+    console.log('✅ Mailbox initialized successfully');
+    await sleep(10000); // Wait 10 seconds
 
-    // --- Step 7: Deploy PolymerISM (optional) ---
+    // --- 6. Deploy PolymerISM (optional) ---
     let polymerIsm = null;
     if (polymerProverAddress && originChainMailboxAddress) {
-      console.log('\n🚀 Step 7: Deploying PolymerISM...');
+      console.log('\n🚀 Step 6: Deploying PolymerISM...');
       console.log('Polymer Prover Address:', polymerProverAddress);
       console.log('Origin Chain Mailbox Address:', originChainMailboxAddress);
 
@@ -135,18 +152,12 @@ module.exports = async function (deployer, network, account) {
         );
         polymerIsm = await PolymerISM.deployed();
         console.log('✅ PolymerISM deployed at:', polymerIsm.address);
-
-        // Verify PolymerISM configuration
-        const configuredProver = await polymerIsm.polymerProver();
-        const configuredMailbox = await polymerIsm.originMailbox();
-        console.log('✅ PolymerISM configured with:');
-        console.log('  • Polymer Prover:', configuredProver);
-        console.log('  • Origin Mailbox:', configuredMailbox);
+        await sleep(10000); // Wait 10 seconds
       } catch (error) {
         console.log('❌ PolymerISM deployment failed:', error.message);
       }
     } else {
-      console.log('\n⚠️  Step 7: Skipping PolymerISM deployment');
+      console.log('\n⚠️  Step 6: Skipping PolymerISM deployment');
       console.log(
         '  To deploy PolymerISM for receiving messages from other chains, provide:',
       );
@@ -167,7 +178,10 @@ module.exports = async function (deployer, network, account) {
     console.log('  • Deployer/Owner:', owner);
     console.log('  • Network:', network);
     console.log('\n📍 Contract Addresses:');
-    console.log('  • MockISM Address:', mockIsm.address);
+    if (!defaultIsm) {
+      console.log('  • MockISM Address:', mockIsm.address);
+    }
+    console.log('  • Default ISM Address:', defaultIsmAddress);
     console.log('  • Mock Default Hook Address:', mockDefaultHook.address);
     console.log('  • Mock Required Hook Address:', mockRequiredHook.address);
     console.log(
@@ -205,7 +219,9 @@ module.exports = async function (deployer, network, account) {
     console.log(
       'MAILBOX_IMPLEMENTATION_ADDRESS=' + mailboxImplementation.address,
     );
-    console.log('MOCK_ISM_ADDRESS=' + mockIsm.address);
+    if (!defaultIsm) {
+      console.log('MOCK_ISM_ADDRESS=' + mockIsm.address);
+    }
     console.log('MOCK_DEFAULT_HOOK_ADDRESS=' + mockDefaultHook.address);
     console.log('MOCK_REQUIRED_HOOK_ADDRESS=' + mockRequiredHook.address);
     console.log('HYPERLANE_DOMAIN_ID=' + hyperlaneDomainId);
