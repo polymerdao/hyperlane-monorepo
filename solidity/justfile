@@ -53,10 +53,10 @@ deploy-new-spoke-chain SPOKE_RPC_URL HUB_RPC_URL ADDRESS_PATH="./devnet-addresse
     export SPOKE_CHAIN_ID=$(just chain-id "{{SPOKE_RPC_URL}}") && \
     export HUB_CHAIN_ID=$(just chain-id "{{HUB_RPC_URL}}") && \
     echo "Spoke Chain ID: $SPOKE_CHAIN_ID, Hub Chain ID: $HUB_CHAIN_ID" && \
-    echo "Step 1: Deploying mailbox on spoke chain..." && \
-    just deploy-mailbox "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
-    echo "Step 2: Deploying PolymerISM on spoke chain with hub as origin..." && \
+    echo "Step 1: Deploying PolymerISM on spoke chain with hub as origin..." && \
     just deploy-polymerism $HUB_CHAIN_ID "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 2: Deploying mailbox on spoke chain..." && \
+    just deploy-mailbox "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
     echo "Step 3: Deploying PolymerISM on hub chain with spoke as origin..." && \
     just deploy-polymerism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
     echo "Step 4: Deploying simple app on spoke chain..." && \
@@ -114,7 +114,7 @@ default-ism RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     @export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
     if [ "$CHAIN_ID" = "25327" ] || [ "$CHAIN_ID" = "84532" ]; then \
         just get-contract $CHAIN_ID "DomainRoutingIsm" "{{ADDRESS_PATH}}"; \
-    elif [ "$CHAIN_ID" = "11155111" ] || [ "$CHAIN_ID" = "3448148188" ]; then \
+    elif [ "$CHAIN_ID" = "11155111" ] || [ "$CHAIN_ID" = "3448148188" ] || [ "$CHAIN_ID" = "1301" ] || [ "$CHAIN_ID" = "300" ]|| [ "$CHAIN_ID" = "421614" ]; then \
         just get-contract $CHAIN_ID "PolymerISM_84532" "{{ADDRESS_PATH}}"; \
     else \
         just get-contract $CHAIN_ID "PolymerISM_25327" "{{ADDRESS_PATH}}"; \
