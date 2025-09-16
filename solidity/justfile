@@ -114,7 +114,7 @@ default-ism RPC_URL ADDRESS_PATH="./devnet-addresses.json":
     @export CHAIN_ID=$(just chain-id "{{RPC_URL}}") && \
     if [ "$CHAIN_ID" = "25327" ] || [ "$CHAIN_ID" = "84532" ]; then \
         just get-contract $CHAIN_ID "DomainRoutingIsm" "{{ADDRESS_PATH}}"; \
-    elif [ "$CHAIN_ID" = "11155111" ] || [ "$CHAIN_ID" = "3448148188" ] || [ "$CHAIN_ID" = "1301" ] || [ "$CHAIN_ID" = "300" ]|| [ "$CHAIN_ID" = "421614" ]; then \
+    elif [ "$CHAIN_ID" = "11155111" ] || [ "$CHAIN_ID" = "3448148188" ] || [ "$CHAIN_ID" = "1301" ] || [ "$CHAIN_ID" = "300" ]|| [ "$CHAIN_ID" = "421614" ] || [ "$CHAIN_ID" = "11155420" ]; then \
         just get-contract $CHAIN_ID "PolymerISM_84532" "{{ADDRESS_PATH}}"; \
     else \
         just get-contract $CHAIN_ID "PolymerISM_25327" "{{ADDRESS_PATH}}"; \
