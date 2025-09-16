@@ -1,0 +1,101 @@
+
+❯ just deploy-mainnet-core
+npx tronbox migrate --network mainnet --reset --to 2
+Using network 'mainnet'.
+
+Running migration: 1_initial_migration.js
+  Deploying Migrations...
+  Migrations:
+    (base58) TTj59TSwSQJNQbM1dAH79pT5GyQBBDN8QU
+    (hex) 41c2c5e2295c8076e5f9e815f18c1a059e0f0ad381
+Saving successful migration to network...
+Saving artifacts...
+Running migration: 2_deploy_contracts.js
+==================================================
+Starting Mailbox Deployment
+==================================================
+Network: mainnet
+Deployer Address: TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9
+⚠️  Could not fetch balance: Cannot read properties of undefined (reading 'mainnet')
+Hyperlane Domain ID: 728126428
+Owner Address: TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9
+==================================================
+
+🚀 Step 1: Deploying Mock Dependencies...
+Deploying MockISM...
+  Deploying MockISM...
+  MockISM:
+    (base58) TGSspmhd1ZRLqabFsgAEViVXaTcg8Ev8Dz
+    (hex) 41470c64a6cb6792268394f54c197ce13cac4f408b
+✅ MockISM deployed at: 41470c64a6cb6792268394f54c197ce13cac4f408b
+Deploying MockHook...
+  Deploying MockHook...
+  MockHook:
+    (base58) TTUAhbumUqYAjVVgzVsp5t7Cka6oykZRpS
+    (hex) 41bff447cc666c24e439529a9899d3723e279bb52c
+✅ MockHook deployed at: 41bff447cc666c24e439529a9899d3723e279bb52c
+✅ Using same MockHook for both default and required hooks
+
+🚀 Step 2: Deploying Mailbox Implementation...
+Deploying Mailbox implementation with domain ID: 728126428
+  Deploying Mailbox...
+  Mailbox:
+    (base58) TS3hBqYZJQxDCSD6spy5K6DGpfwgq4951A
+    (hex) 41b05b346a0773f37e9a511251399c701959eb9b0e
+✅ Mailbox implementation deployed at: 41b05b346a0773f37e9a511251399c701959eb9b0e
+
+🚀 Step 3: Preparing Initialization Data...
+Deploying proxy without initialization (will initialize separately)...
+
+🚀 Step 4: Deploying ERC1967Proxy for Mailbox...
+  Deploying ERC1967Proxy...
+  ERC1967Proxy:
+    (base58) TJHSpk2YGfNWuFyDpsbjCY33o8FtDeMapv
+    (hex) 415b34081e9d453fc2ba925d893583d89d1b7175dd
+✅ Mailbox Proxy deployed at: 415b34081e9d453fc2ba925d893583d89d1b7175dd
+
+🚀 Step 5: Initializing Mailbox through Proxy...
+Calling initialize function...
+✅ Mailbox initialized successfully
+
+🚀 Step 6: Verifying Deployment...
+✅ Mailbox local domain: 728126428
+✅ Mailbox owner: 41cc3dee77dd3a77dc623d6c8b931a1b0aab56d81d
+✅ Default ISM: 41470c64a6cb6792268394f54c197ce13cac4f408b
+✅ Default Hook: 41bff447cc666c24e439529a9899d3723e279bb52c
+✅ Required Hook: 41bff447cc666c24e439529a9899d3723e279bb52c
+
+⚠️  Step 7: Skipping PolymerISM deployment
+  To deploy PolymerISM for receiving messages from other chains, provide:
+  • POLYMER_PROVER_ADDRESS: Address of the Polymer prover on this chain
+  • ORIGIN_CHAIN_MAILBOX_ADDRESS: Address of the Mailbox on the origin chain
+
+============================================================
+🎉 DEPLOYMENT SUMMARY
+============================================================
+📋 Configuration:
+  • Target Chain Hyperlane Domain ID: 728126428
+  • Deployer/Owner: TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9
+  • Network: mainnet
+
+📍 Contract Addresses:
+  • MockISM Address: 41470c64a6cb6792268394f54c197ce13cac4f408b
+  • Mock Default Hook Address: 41bff447cc666c24e439529a9899d3723e279bb52c
+  • Mock Required Hook Address: 41bff447cc666c24e439529a9899d3723e279bb52c
+  • Mailbox Implementation Address: 41b05b346a0773f37e9a511251399c701959eb9b0e
+  • Mailbox Proxy Address: 415b34081e9d453fc2ba925d893583d89d1b7175dd
+
+🔗 Integration Info:
+  • Use the Mailbox Proxy Address: 415b34081e9d453fc2ba925d893583d89d1b7175dd
+  • As the `originMailbox` when deploying PolymerISM on the destination chain.
+============================================================
+
+💾 Save these addresses for your records:
+MAILBOX_PROXY_ADDRESS=415b34081e9d453fc2ba925d893583d89d1b7175dd
+MAILBOX_IMPLEMENTATION_ADDRESS=41b05b346a0773f37e9a511251399c701959eb9b0e
+MOCK_ISM_ADDRESS=41470c64a6cb6792268394f54c197ce13cac4f408b
+MOCK_DEFAULT_HOOK_ADDRESS=41bff447cc666c24e439529a9899d3723e279bb52c
+MOCK_REQUIRED_HOOK_ADDRESS=41bff447cc666c24e439529a9899d3723e279bb52c
+HYPERLANE_DOMAIN_ID=728126428
+Saving successful migration to network...
+ERROR: Request failed with status code 403

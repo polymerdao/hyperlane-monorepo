@@ -1,0 +1,46 @@
+❯ just deploy-mainnet-polymer-ism
+POLYMER_PROVER_ADDRESS=41D4D1314724652392356AA169CDE870B34640A38B ORIGIN_CHAIN_MAILBOX_ADDRESS=0x7f50C5776722630a0024fAE05fDe8b47571D7B39 npx tronbox migrate --network mainnet -f 3 --to 3
+Using network 'mainnet'.
+
+Running migration: 3_deploy_polymer_ism.js
+==================================================
+Starting PolymerISM Deployment
+==================================================
+Network: mainnet
+Deployer Address: TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9
+Polymer Prover Address: 41D4D1314724652392356AA169CDE870B34640A38B
+Origin Chain Mailbox Address: 0x7f50C5776722630a0024fAE05fDe8b47571D7B39
+==================================================
+
+🚀 Deploying PolymerISM...
+  Deploying PolymerISM...
+  PolymerISM:
+    (base58) THRe6vhJsJkjo3ULd9RdJ1SzTxsRUcEEb7
+    (hex) 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+✅ PolymerISM deployed at: 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+
+🔍 Verifying PolymerISM configuration...
+✅ PolymerISM configured with:
+  • Polymer Prover: 41d4d1314724652392356aa169cde870b34640a38b
+  • Origin Mailbox: 417f50c5776722630a0024fae05fde8b47571d7b39
+
+============================================================
+🎉 POLYMERISM DEPLOYMENT SUMMARY
+============================================================
+📋 Configuration:
+  • Network: mainnet
+  • Deployer: TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9
+
+📍 Contract Address:
+  • PolymerISM Address: 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+
+📨 Usage Instructions:
+  • This PolymerISM verifies messages from: 0x7f50C5776722630a0024fAE05fDe8b47571D7B39
+  • Message receivers should specify ISM address: 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+  • In their `interchainSecurityModule()` function or ISM configuration
+============================================================
+
+💾 Save this address for your records:
+POLYMER_ISM_ADDRESS=4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+Saving successful migration to network...
+ERROR: Request failed with status code 403

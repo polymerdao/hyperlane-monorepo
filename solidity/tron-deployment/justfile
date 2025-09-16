@@ -1,0 +1,77 @@
+set dotenv-load
+
+# Everclear (Origin Chain) Contract Addresses
+EVERCLEAR_MAINNET_MAILBOX := "0x7f50C5776722630a0024fAE05fDe8b47571D7B39"
+
+# Tron Testnet Contract Addresses
+TRON_TESTNET_PROVER_CONTRACT := "4178cb41a9d140de79053b75564cd64ca28478c028"
+TRON_TESTNET_MAILBOX_PROXY := "4177d2287aff6124ac5e01f417ad97cd39f2c31df7"
+TRON_TESTNET_POLYMER_ISM := "41047fa6a32fce76cd4ddc6d1a9be5445e386e804b"
+TRON_TESTNET_PROTOCOL_FEE := "418db3cf1590874df16f77df223795556c087a9806"
+
+# Tron Mainnet Contract Addresses
+TRON_MAINNET_PROVER_CONTRACT := "418769615eb43fa257d2f0b3956a114dcd84117b64"
+TRON_MAINNET_MAILBOX_PROXY := "415b34081e9d453fc2ba925d893583d89d1b7175dd"
+TRON_MAINNET_MAILBOX_IMPL := "41b05b346a0773f37e9a511251399c701959eb9b0e"
+TRON_MAINNET_MOCK_ISM := "41470c64a6cb6792268394f54c197ce13cac4f408b"
+TRON_MAINNET_MOCK_HOOK := "41bff447cc666c24e439529a9899d3723e279bb52c"
+TRON_MAINNET_POLYMER_ISM := "41CBCBC532CF88BACF1C8A6359604C784D042BB692"
+TRON_MAINNET_MESSAGE_CONTRACT := "410e6a4cb834e393779141291a302fed2120e09e30"
+TRON_MAINNET_PROTOCOL_FEE := "4129dc010b0de7831c174f5a8f2bea4fcb00ae2044"
+
+# Protocol Fee Configuration
+PROTOCOL_FEE_MAX := "100000000"  # 100 TRX in SUN (immutable)
+PROTOCOL_FEE_INITIAL := "2000000"  # 2 TRX in SUN (adjustable)
+PROTOCOL_FEE_BENEFICIARY := "TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9"
+PROTOCOL_FEE_OWNER := "TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9"
+
+build-contract:
+    npx tronbox compile
+
+# Testnet deployment targets
+deploy-testnet-reset:
+    npx tronbox migrate --network nile --reset
+
+deploy-testnet:
+    npx tronbox migrate --network nile
+
+# Deploy only the PolymerISM contract (migration #3) on testnet
+deploy-testnet-polymer-ism:
+    POLYMER_PROVER_ADDRESS={{TRON_TESTNET_PROVER_CONTRACT}} ORIGIN_CHAIN_MAILBOX_ADDRESS={{EVERCLEAR_MAINNET_MAILBOX}} npx tronbox migrate --network nile -f 3 --to 3
+
+# Deploy SimpleMessageSenderReceiver contract (migration #4) on testnet
+deploy-testnet-message-sender-receiver:
+    MAILBOX_PROXY_ADDRESS={{TRON_TESTNET_MAILBOX_PROXY}} POLYMER_ISM_ADDRESS={{TRON_TESTNET_POLYMER_ISM}} npx tronbox migrate --network nile -f 4 --to 4
+
+# Deploy ProtocolFee contract (migration #6) on testnet
+deploy-testnet-protocol-fee:
+    PROTOCOL_FEE_MAX={{PROTOCOL_FEE_MAX}} PROTOCOL_FEE_INITIAL={{PROTOCOL_FEE_INITIAL}} PROTOCOL_FEE_BENEFICIARY={{PROTOCOL_FEE_BENEFICIARY}} PROTOCOL_FEE_OWNER={{PROTOCOL_FEE_OWNER}} npx tronbox migrate --network nile -f 6 --to 6
+
+# Mainnet deployment targets
+deploy-mainnet-core:
+    npx tronbox migrate --network mainnet --reset --to 2
+
+deploy-mainnet-polymer-ism:
+    POLYMER_PROVER_ADDRESS={{TRON_MAINNET_PROVER_CONTRACT}} ORIGIN_CHAIN_MAILBOX_ADDRESS={{EVERCLEAR_MAINNET_MAILBOX}} npx tronbox migrate --network mainnet -f 3 --to 3
+
+deploy-mainnet-message-sender-receiver:
+    MAILBOX_PROXY_ADDRESS={{TRON_MAINNET_MAILBOX_PROXY}} POLYMER_ISM_ADDRESS={{TRON_MAINNET_POLYMER_ISM}} npx tronbox migrate --network mainnet -f 4 --to 4
+
+deploy-mainnet-chain-id-reader:
+    npx tronbox migrate --network mainnet -f 5 --to 5
+
+deploy-mainnet-protocol-fee:
+    PROTOCOL_FEE_MAX={{PROTOCOL_FEE_MAX}} PROTOCOL_FEE_INITIAL={{PROTOCOL_FEE_INITIAL}} PROTOCOL_FEE_BENEFICIARY={{PROTOCOL_FEE_BENEFICIARY}} PROTOCOL_FEE_OWNER={{PROTOCOL_FEE_OWNER}} npx tronbox migrate --network mainnet -f 6 --to 6
+
+update-mainnet-mailbox-hook:
+    PROTOCOL_FEE_ADDRESS={{TRON_MAINNET_PROTOCOL_FEE}} npx tronbox migrate --network mainnet -f 7 --to 7
+
+update-testnet-mailbox-hook:
+    PROTOCOL_FEE_ADDRESS={{TRON_TESTNET_PROTOCOL_FEE}} npx tronbox migrate --network nile -f 7 --to 7
+
+# Generic deployment targets with parameters
+deploy-polymer-ism-with-params prover_address mailbox_address network:
+    POLYMER_PROVER_ADDRESS={{prover_address}} ORIGIN_CHAIN_MAILBOX_ADDRESS={{mailbox_address}} npx tronbox migrate --network {{network}} -f 3 --to 3
+
+deploy-message-sender-receiver-with-params mailbox_address ism_address network:
+    MAILBOX_PROXY_ADDRESS={{mailbox_address}} POLYMER_ISM_ADDRESS={{ism_address}} npx tronbox migrate --network {{network}} -f 4 --to 4

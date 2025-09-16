@@ -1,0 +1,54 @@
+❯ just deploy-mainnet-message-sender-receiver
+MAILBOX_PROXY_ADDRESS=415b34081e9d453fc2ba925d893583d89d1b7175dd POLYMER_ISM_ADDRESS=4151c8a61db22daa6aedfe97395fa5e0ac9812a242 npx tronbox migrate --network mainnet -f 4 --to 4
+Using network 'mainnet'.
+
+Running migration: 4_deploy_simple_message_sender_receiver.js
+==================================================
+Starting SimpleMessageSenderReceiver Deployment
+==================================================
+Network: mainnet
+Deployer Address: TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9
+⚠️  Could not fetch balance: Cannot read properties of undefined (reading 'mainnet')
+
+📋 Using existing contracts:
+  • Mailbox Proxy Address: 415b34081e9d453fc2ba925d893583d89d1b7175dd
+  • PolymerISM Address: 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+==================================================
+
+🚀 Deploying SimpleMessageSenderReceiver...
+Constructor parameters:
+  • _mailbox: 415b34081e9d453fc2ba925d893583d89d1b7175dd
+  • _polymerIsm: 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+  Deploying SimpleMessageSenderReceiver...
+  SimpleMessageSenderReceiver:
+    (base58) TGkU1eqp48gFpvvxN8a7Ag1DGWgJrnVrC1
+    (hex) 414a6000be6885c3178a558ae8fcce8b473f740a41
+✅ SimpleMessageSenderReceiver deployed at: 414a6000be6885c3178a558ae8fcce8b473f740a41
+
+🔍 Verifying deployment...
+✅ Configured Mailbox: 415b34081e9d453fc2ba925d893583d89d1b7175dd
+✅ Configured PolymerISM: 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+✅ Initial message counter: 0
+
+============================================================
+🎉 SIMPLE MESSAGE SENDER/RECEIVER DEPLOYMENT SUMMARY
+============================================================
+📋 Configuration:
+  • Network: mainnet
+  • Deployer: TUb93GbDTKS2RCbfmRzNwEiCTQ8iFPwXF9
+  • Mailbox: 415b34081e9d453fc2ba925d893583d89d1b7175dd
+  • PolymerISM: 4151c8a61db22daa6aedfe97395fa5e0ac9812a242
+
+📍 Contract Address:
+  • SimpleMessageSenderReceiver: 414a6000be6885c3178a558ae8fcce8b473f740a41
+
+📨 Usage Instructions:
+  • Use sendMessage() to dispatch messages to other chains
+  • The contract will receive messages via handle() function
+  • Messages are verified using the configured PolymerISM
+  • Query getLatestMessageDetails() to see received messages
+============================================================
+
+💾 Save this address for your records:
+SIMPLE_MESSAGE_SENDER_RECEIVER_ADDRESS=414a6000be6885c3178a558ae8fcce8b473f740a41
+Saving successful migration to network...
