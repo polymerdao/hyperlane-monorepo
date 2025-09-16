@@ -59,7 +59,9 @@ deploy-new-spoke-chain SPOKE_RPC_URL HUB_RPC_URL ADDRESS_PATH="./devnet-addresse
     just deploy-mailbox "{{SPOKE_RPC_URL}}" "{{ADDRESS_PATH}}" && \
     echo "Step 3: Deploying PolymerISM on hub chain with spoke as origin..." && \
     just deploy-polymerism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
-    echo "Step 4: Deploying simple app on spoke chain..." && \
+    echo "Step 4: Configuring Default ISM on hub chain for spoke chain..." && \
+    just configure-routing-ism $SPOKE_CHAIN_ID "{{HUB_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    echo "Step 5: Deploying simple app on spoke chain..." && \
     just deploy-simple-app "{{SPOKE_RPC_URL}}" $HUB_CHAIN_ID "{{ADDRESS_PATH}}" && \
     echo "Spoke chain deployment complete!"
 
