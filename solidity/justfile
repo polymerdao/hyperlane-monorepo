@@ -146,7 +146,7 @@ tron-deploy-polymerism ORIGIN_RPC_URL RPC_URL ADDRESS_PATH="./addresses/devnet-a
     just save-contract-address "{{RPC_URL}}"/jsonrpc "PolymerISM" "tron-polymerism" "PolymerISM deployed at: 41[a-fA-F0-9]*" "{{ADDRESS_PATH}}"
 
 # Deploy SimpleMessageSenderReceiver on TRON and save address
-tron-deploy-simplesender-receiver RPC_URL ORIGIN_CHAIN_ID ADDRESS_PATH="./addresses/devnet-addresses.json":
+tron-deploy-simple-app RPC_URL ORIGIN_CHAIN_ID ADDRESS_PATH="./addresses/devnet-addresses.json":
     echo "Using deployer account $(cast wallet address $PRIVATE_KEY)"
     export CHAIN_ID=$(just chain-id "{{RPC_URL}}"/jsonrpc) && \
     export MAILBOX_ADDRESS=$(just get-contract $CHAIN_ID Mailbox "{{ADDRESS_PATH}}") && \
@@ -170,7 +170,7 @@ deploy-new-tron-spoke-chain HUB_RPC_URL TRON_RPC_URL ADDRESS_PATH="./addresses/d
     just tron-deploy-polymerism "{{HUB_RPC_URL}}" "{{TRON_RPC_URL}}" "{{ADDRESS_PATH}}" && \
     echo "Step 4: Deploying SimpleMessageSenderReceiver on TRON..." && \
     export TRON_ISM=$(just get-contract $TRON_DOMAIN_ID PolymerISM "{{ADDRESS_PATH}}") && \
-    just tron-deploy-simplesender-receiver $TRON_MAILBOX $TRON_ISM "{{TRON_RPC_URL}}" "{{ADDRESS_PATH}}" && \
+    just tron-deploy-simple-app "{{TRON_RPC_URL}}" $HUB_CHAIN_ID "{{ADDRESS_PATH}}" && \
     echo "TRON spoke chain deployment complete!"
 
 # INTERNAL METHODS
